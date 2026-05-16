@@ -175,7 +175,7 @@
 
         .movie-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 30px;
         }
 
@@ -196,7 +196,7 @@
         .poster-container {
             position: relative;
             width: 100%;
-            height: 340px;
+            height: 360px; /* Enhanced portrait height balance */
             overflow: hidden;
             background-color: #111;
         }
@@ -407,7 +407,8 @@
             'dm4': {
                 title: 'Despicable Me 4',
                 videoUrl: 'PASTE_YOUR_DESPICABLE_ME_4_URL_HERE',
-                posterUrl: 'https://4kwallpapers.com/images/wallpapers/despicable-me-4-2560x1440-15031.jpg',
+                billboardPosterUrl: 'https://4kwallpapers.com/images/wallpapers/despicable-me-4-2560x1440-15031.jpg',
+                libraryPosterUrl: 'https://m.media-amazon.com/images/M/MV5BODlhNjE1NjUtNjZiNi00MDBmLWJmYWEtNTEyZjEyYzg5MTcxXkEyXkFqcGc@._V1_.jpg',
                 logoUrl: '', 
                 description: 'Gru, Lucy, Margo, Edith, and Agnes welcome a new member to the family, Gru Jr., who is intent on tormenting his dad. Gru faces a new nemesis in Maxime Le Mal and his femme fatale girlfriend Valentina, and the family is forced to go on the run.',
                 themeStyle: 'clean-poster',
@@ -416,7 +417,8 @@
             'mk1': {
                 title: 'Mortal Kombat 1',
                 videoUrl: 'https://archive.org/download/mortal-kombat-bluray-1080p/Mortal%20Kombat%20%282021%29.mp4',
-                posterUrl: 'https://4kwallpapers.com/images/wallpapers/mortal-kombat-2021-movies-poster-4096x1895-4902.jpg',
+                billboardPosterUrl: 'https://4kwallpapers.com/images/wallpapers/mortal-kombat-2021-movies-poster-4096x1895-4902.jpg',
+                libraryPosterUrl: 'https://i.ebayimg.com/images/g/rocAAOSwojRgMJBx/s-l400.jpg',
                 logoUrl: 'https://logos-world.net/wp-content/uploads/2020/11/Mortal-Kombat-Logo.png',
                 description: 'MMA fighter Cole Young seeks out Earth\'s greatest champions in order to stand against the enemies of Outworld in a high stakes battle for the universe.',
                 themeStyle: 'fiery-orange',
@@ -424,8 +426,9 @@
             },
             'bfg': {
                 title: 'The BFG',
-                videoUrl: 'PASTE_YOUR_THE_BFG_URL_HERE',
-                posterUrl: 'https://wallpapers.com/images/hd/the-bfg-movie-alo8v739htwfsxit.jpg',
+                videoUrl: 'https://archive.org/download/index_20260516/The.BFG.2016.720p.WEBRip.x264.AAC-ETRG.mp4',
+                billboardPosterUrl: 'https://wallpapers.com/images/hd/the-bfg-movie-alo8v739htwfsxit.jpg',
+                libraryPosterUrl: 'https://m.media-amazon.com/images/I/71naZ-Kfl4L._AC_UF894,1000_QL80_.jpg',
                 logoUrl: '', 
                 description: 'An orphan girl named Sophie befriends a benevolent giant, dubbed the Big Friendly Giant, who delivers charming dreams to children. Together, they embark on a grand adventure to stop malicious, man-eating giants from invading the human world.',
                 themeStyle: 'cold-steel',
@@ -449,7 +452,6 @@
 
         // ==========================================
         // DYNAMIC RANDOM ROTATOR ENGINE
-        // Selects a random ID from the available database keys on load
         // ==========================================
         const movieIds = Object.keys(movieDatabase);
         const randomElementIndex = Math.floor(Math.random() * movieIds.length);
@@ -460,7 +462,7 @@
             const data = movieDatabase[id];
             if (!data) return;
 
-            billboard.style.backgroundImage = `url('${data.posterUrl}')`;
+            billboard.style.backgroundImage = `url('${data.billboardPosterUrl}')`;
             
             // Check if movie layout parameters require hiding descriptive text blocks
             if (data.hideTextOnBillboard) {
@@ -487,7 +489,7 @@
             heroPlayBtn.setAttribute('onclick', `openMovieTab('${id}')`);
         }
 
-        // Build Shelf Grid Layout Loop
+        // Build Shelf Grid Layout Loop using dedicated library portrait elements
         function buildLibraryUI() {
             libraryGrid.innerHTML = '';
             Object.keys(movieDatabase).forEach(id => {
@@ -501,7 +503,7 @@
 
                 card.innerHTML = `
                     <div class="poster-container">
-                        <img class="poster-art" src="${item.posterUrl}" alt="${item.title} Poster">
+                        <img class="poster-art" src="${item.libraryPosterUrl}" alt="${item.title} Portrait Poster">
                         ${logoHtml}
                     </div>
                     <div class="movie-card-title">${item.title}</div>
@@ -517,7 +519,7 @@
 
             // Load track data inside the container window mechanics
             tabPlayer.src = data.videoUrl;
-            tabPlayer.poster = data.posterUrl;
+            tabPlayer.poster = data.billboardPosterUrl;
             modalTitle.innerText = data.title;
             modalDesc.innerText = data.description;
 
