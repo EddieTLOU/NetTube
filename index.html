@@ -3,356 +3,1226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetTube</title>
-    <!-- Dynamic SVG Favicon Integration -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300f2fe'><path d='M4 6H14C15.1 6 16 6.9 16 8V16C16 17.1 15.1 18 14 18H4C2.9 18 2 17.1 2 16V8C2 6.9 2.9 6 4 6Z'/><path d='M23 7.5L18 11V13L23 16.5V7.5Z'/></svg>">
+    <title>NetTube - Ultra Premium Cinematic Streaming Engine</title>
     
-    <!-- Premium Cinematic / Apple UI Typography Fonts -->
+    <!-- Premium Global Typography Infrastructure -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Inline High-Fidelity Vector Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300f2fe'%3E%3Cpath d='M23 7l-7 5 7 5V7zm-9 10H3c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h11c1.1 0 2 .9 2 2v6c0 1.1-.9 2-2 2z'/%3E%3C/svg%3E">
+
     <style>
-        /* Reset and Base Styles */
+        /* --- Premium Apple Cinematic Design Tokens --- */
+        :root {
+            --bg-pure-black: #050507;
+            --bg-deep-matte: #0c0c0e;
+            --bg-card-glass: rgba(255, 255, 255, 0.03);
+            --bg-modal-glass: rgba(10, 10, 14, 0.94);
+            --border-ultra-thin: rgba(255, 255, 255, 0.07);
+            --border-glow-focus: rgba(0, 242, 254, 0.4);
+            
+            --text-primary-white: #f5f5f7;
+            --text-secondary-silver: #a1a1a6;
+            --text-dark-muted: #6e6e73;
+            
+            --accent-neon-cyan: #00f2fe;
+            --accent-electric-blue: #4facfe;
+            --accent-premium-gold: #b59410;
+            --accent-vibrant-orange: #ff4e50;
+            
+            --panel-blur-radius: 24px;
+            --card-blur-radius: 12px;
+            --transition-premium-fluid: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-snappy: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+            
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-display: 'Orbitron', sans-serif;
+            --font-serif: 'Cinzel', Georgia, serif;
+        }
+
+        /* --- Master Structural Reset --- */
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            min-height: 100vh;
+            background-color: var(--bg-pure-black);
+            color: var(--text-primary-white);
+            font-family: var(--font-main);
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* Apple Glassmorphism Utility Class */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(35px) saturate(210%);
-            -webkit-backdrop-filter: blur(35px) saturate(210%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        /* Custom Premium Scrollbar Layout */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-pure-black);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            border: 2px solid var(--bg-pure-black);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-neon-cyan);
         }
 
-        /* Re-engineered Apple Glass Pill System Buttons */
-        .apple-glass-btn {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #ffffff;
-            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15), 0 8px 32px rgba(0, 0, 0, 0.3);
-            border-radius: 50px;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .apple-glass-btn:hover {
-            background: rgba(255, 255, 255, 0.14);
-            border-color: rgba(255, 255, 255, 0.25);
-            transform: scale(1.03) translateY(-1px);
-            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.25), 0 12px 40px rgba(255, 255, 255, 0.05);
-        }
-        
-        .apple-glass-btn:active {
-            transform: scale(0.98) translateY(0);
-        }
-
-        /* Transparent Top Navigation Header */
+        /* --- Fixed Blur-Glass Navigation Header --- */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 24px 4%;
-            position: absolute;
+            padding: 0 5%;
+            height: 76px;
+            position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
-            z-index: 100;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            z-index: 500;
+            background: linear-gradient(to bottom, rgba(5, 5, 7, 0.85) 0%, rgba(5, 5, 7, 0) 100%);
+            backdrop-filter: blur(var(--panel-blur-radius));
+            -webkit-backdrop-filter: blur(var(--panel-blur-radius));
+            border-bottom: 1px solid var(--border-ultra-thin);
+            transition: var(--transition-premium-fluid);
         }
 
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.9rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
+        header.scrolled {
+            background: rgba(12, 12, 14, 0.95);
+            height: 66px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .brand-logo-container {
             display: flex;
             align-items: center;
-            gap: 12px;
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .brand-logo {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-neon-cyan) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+            user-select: none;
         }
 
-        .logo svg {
-            width: 34px;
-            height: 34px;
-            fill: url(#cyan-gradient);
-            filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
-            flex-shrink: 0;
-        }
-
-        /* Apple Glass Segmented Pill Controller */
-        .tab-container {
+        /* Modernist Apple Pill Segment Controller */
+        .navigation-pill-wrapper {
             position: relative;
             display: flex;
             background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            padding: 5px;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-ultra-thin);
+            padding: 4px;
+            border-radius: 40px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
-        .tab-btn {
+        .nav-pill-trigger {
             position: relative;
             background: transparent;
             border: none;
-            color: rgba(255, 255, 255, 0.55);
+            color: var(--text-secondary-silver);
             padding: 10px 28px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            z-index: 2;
-            transition: color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-            font-family: 'Inter', sans-serif;
-            border-radius: 50px;
-        }
-
-        .tab-btn.active {
-            color: #ffffff;
-            font-weight: 600;
-        }
-
-        .active-pill {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            height: calc(100% - 10px);
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.2), 0 4px 12px rgba(0,0,0,0.25);
-            border-radius: 50px;
-            z-index: 1;
-            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-            pointer-events: none;
-        }
-
-        /* Hero Billboard Banner Section */
-        .billboard-container {
-            position: relative;
-            width: 100%;
-            height: 80vh;
-            min-height: 600px;
-            background-color: #000000; /* Locked to deep black background */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* New Static Play Prompt Display Block */
-        .media-placeholder-screen {
-            text-align: center;
-            z-index: 2;
-        }
-
-        .media-placeholder-screen h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: #ffffff;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-        }
-
-        .media-placeholder-screen p {
-            font-family: 'Inter', sans-serif;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-        }
-
-        .btn-play {
-            padding: 16px 40px;
-            font-size: 1.1rem;
+            font-size: 0.85rem;
             font-weight: 600;
             letter-spacing: 0.5px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-play:hover {
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3), 0 0 30px rgba(0, 242, 254, 0.4);
-            border-color: rgba(0, 242, 254, 0.6);
-            background: rgba(0, 242, 254, 0.15);
-        }
-
-        /* Media Card Grid Shelf */
-        .shelf {
-            padding: 40px 4% 80px 4%;
-            background-color: #000000;
-            position: relative;
+            cursor: pointer;
             z-index: 5;
+            border-radius: 30px;
+            transition: var(--transition-snappy);
         }
 
-        .shelf h2 {
-            font-size: 1.6rem;
+        .nav-pill-trigger:hover {
+            color: var(--text-primary-white);
+        }
+
+        .nav-pill-trigger.active {
+            color: #050507;
+        }
+
+        .sliding-pill-backdrop {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            height: calc(100% - 8px);
+            background: #ffffff;
+            border-radius: 30px;
+            transition: var(--transition-premium-fluid);
+            z-index: 1;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .utility-nav-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-trigger-icon {
+            background: transparent;
+            border: none;
+            color: var(--text-primary-white);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: var(--transition-snappy);
+        }
+
+        .search-trigger-icon:hover {
+            color: var(--accent-neon-cyan);
+            transform: scale(1.05);
+        }
+
+        /* --- Immersive Cinematic Hero Billboard --- */
+        .billboard-master-stage {
+            position: relative;
+            height: 85vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 6%;
+            background-size: cover;
+            background-position: center 30%;
+            transition: var(--transition-premium-fluid);
+        }
+
+        .billboard-master-stage::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 65% 35%, rgba(5, 5, 7, 0) 15%, rgba(5, 5, 7, 0.92) 80%),
+                        linear-gradient(to top, var(--bg-pure-black) 0%, rgba(5, 5, 7, 0.4) 40%, rgba(5, 5, 7, 0) 100%);
+            z-index: 10;
+        }
+
+        .billboard-core-narrative {
+            position: relative;
+            z-index: 20;
+            max-width: 680px;
+            margin-top: 60px;
+        }
+
+        /* Custom High-Contrast Dynamic Typography Sets */
+        .regal-gold-title {
+            font-family: var(--font-serif);
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(to bottom, #ffe89e 0%, var(--accent-premium-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.05;
+            margin-bottom: 18px;
+            letter-spacing: -1px;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+        }
+
+        .fiery-orange-title {
+            font-family: var(--font-display);
+            font-size: 4.2rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--accent-vibrant-orange) 0%, #f9d423 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+            margin-bottom: 18px;
+            letter-spacing: -2px;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+        }
+
+        .cyber-cyan-title {
+            font-family: var(--font-display);
+            font-size: 4.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-neon-cyan) 50%, var(--accent-electric-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+            margin-bottom: 18px;
+            letter-spacing: 0px;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+        }
+
+        .billboard-meta-tagline {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent-neon-cyan);
+        }
+
+        .meta-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-ultra-thin);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: var(--text-primary-white);
+            font-size: 0.75rem;
+        }
+
+        .billboard-abstract-summary {
+            font-size: 1.05rem;
+            color: #e3e3e8;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-weight: 300;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        .billboard-action-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .primary-cinema-btn {
+            background: #ffffff;
+            color: #050507;
+            border: none;
+            padding: 14px 36px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition-premium-fluid);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
+        }
+
+        .primary-cinema-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: var(--accent-neon-cyan);
+            box-shadow: 0 8px 30px rgba(0, 242, 254, 0.4);
+        }
+
+        .secondary-cinema-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary-white);
+            border: 1px solid var(--border-ultra-thin);
+            padding: 14px 28px;
+            font-size: 0.95rem;
             font-weight: 600;
-            margin-bottom: 25px;
-            color: rgba(220, 235, 255, 0.95);
-            letter-spacing: -0.3px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-premium-fluid);
         }
 
-        .library-content-view {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            opacity: 1;
-            transform: translateY(0);
+        .secondary-cinema-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .movie-grid {
+        /* --- Genre Filter Micro-Grid --- */
+        .genre-filtration-belt {
+            padding: 30px 6% 10px 6%;
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            white-space: nowrap;
+            z-index: 40;
+            position: relative;
+        }
+
+        .genre-filtration-belt::-webkit-scrollbar {
+            display: none; /* Hide for smooth organic swipe */
+        }
+
+        .genre-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-ultra-thin);
+            color: var(--text-secondary-silver);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-snappy);
+        }
+
+        .genre-pill:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary-white);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .genre-pill.active {
+            background: var(--text-primary-white);
+            color: var(--bg-pure-black);
+            border-color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* --- Premium Responsive Content Shelf System --- */
+        .shelf-container-block {
+            padding: 20px 6% 60px 6%;
+            position: relative;
+            z-index: 30;
+        }
+
+        .shelf-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .shelf-headline {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .shelf-headline::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 30px;
+            height: 2px;
+            background: var(--accent-neon-cyan);
+            border-radius: 2px;
+        }
+
+        .shelf-counter-metric {
+            font-size: 0.85rem;
+            color: var(--text-dark-muted);
+            font-weight: 500;
+        }
+
+        .cinematic-responsive-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
         }
 
-        .movie-card {
-            border-radius: 20px;
+        /* High-End Card Glassmorphic Architecture */
+        .cinematic-card {
+            background: var(--bg-card-glass);
+            border: 1px solid var(--border-ultra-thin);
+            border-radius: 16px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            background: #070708;
-        }
-
-        .movie-card:hover {
-            transform: scale(1.04) translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 242, 254, 0.12);
-            border-color: rgba(0, 242, 254, 0.25);
-        }
-
-        .poster-container {
+            transition: var(--transition-premium-fluid);
             position: relative;
-            width: 100%;
-            height: 360px;
-            overflow: hidden;
-            background-color: #111;
+            display: flex;
+            flex-direction: column;
         }
 
-        .movie-card img.poster-art {
+        .cinematic-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .cinematic-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .card-thumbnail-viewport {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            background: #131316;
+            overflow: hidden;
+        }
+
+        .card-image-asset {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
-            transition: transform 0.6s ease;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .movie-card-title {
-            padding: 18px;
-            font-size: 1.05rem;
-            font-weight: 500;
-            text-align: center;
+        .cinematic-card:hover .card-image-asset {
+            transform: scale(1.08);
+        }
+
+        .card-hover-overlay-controls {
+            position: absolute;
+            inset: 0;
+            background: rgba(5, 5, 7, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition-snappy);
+            z-index: 10;
+        }
+
+        .cinematic-card:hover .card-hover-overlay-controls {
+            opacity: 1;
+        }
+
+        .card-play-trigger-bubble {
+            background: #ffffff;
+            color: #050507;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: scale(0.8);
+            transition: var(--transition-premium-fluid);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .cinematic-card:hover .card-play-trigger-bubble {
+            transform: scale(1);
+        }
+
+        .card-play-trigger-bubble:hover {
+            background: var(--accent-neon-cyan);
+            transform: scale(1.1) !important;
+        }
+
+        .card-metadata-payload {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-runtime-pill {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(5, 5, 7, 0.75);
+            border: 1px solid var(--border-ultra-thin);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-primary-white);
+            backdrop-filter: blur(4px);
+            z-index: 12;
+        }
+
+        .card-structural-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary-white);
+            margin-bottom: 6px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            color: rgba(225, 240, 255, 0.85);
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            transition: var(--transition-snappy);
         }
 
-        /* Full Screen Immersive Detail Overlay Panel */
-        .detail-overlay {
+        .cinematic-card:hover .card-structural-title {
+            color: var(--accent-neon-cyan);
+        }
+
+        .card-structural-sub {
+            font-size: 0.8rem;
+            color: var(--text-secondary-silver);
+            margin-bottom: 10px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-abstract-snippet {
+            font-size: 0.82rem;
+            color: var(--text-dark-muted);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-top: auto;
+        }
+
+        /* --- Isolated Cinematic Media Presentation Stage (Modal) --- */
+        .cinema-theater-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background-color: #000000; /* Force complete black display layout */
-            z-index: 200;
-            display: none;
+            inset: 0;
+            background: rgba(3, 3, 5, 0.95);
+            backdrop-filter: blur(var(--panel-blur-radius));
+            -webkit-backdrop-filter: blur(var(--panel-blur-radius));
+            z-index: 2000;
+            display: flex;
             align-items: center;
             justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 40px;
+        }
+
+        .cinema-theater-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .theater-enclosure-window {
+            background: var(--bg-deep-matte);
+            border: 1px solid var(--border-ultra-thin);
+            width: 100%;
+            max-width: 1100px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255,255,255,0.03);
+            transform: scale(0.94);
+            transition: var(--transition-premium-fluid);
+            position: relative;
+        }
+
+        .cinema-theater-overlay.active .theater-enclosure-window {
+            transform: scale(1);
+        }
+
+        /* Anti-Glitch Multi-Layer Video Dock */
+        .theater-video-chassis {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #08080a;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .theater-video-chassis::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.8);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .native-video-pipeline {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: relative;
+            z-index: 10;
+            outline: none;
+        }
+
+        .theater-metadata-block {
+            padding: 35px;
+            background: linear-gradient(to bottom, var(--bg-deep-matte) 0%, var(--bg-pure-black) 100%);
+            border-top: 1px solid var(--border-ultra-thin);
+        }
+
+        .theater-header-flex-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            gap: 20px;
+        }
+
+        .theater-structural-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #ffffff, var(--text-secondary-silver));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .theater-dismissal-trigger {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-ultra-thin);
+            color: #ffffff;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: var(--transition-premium-fluid);
+            backdrop-filter: blur(10px);
+        }
+
+        .theater-dismissal-trigger:hover {
+            background: #ffffff;
+            color: #050507;
+            transform: rotate(90deg);
+        }
+
+        .theater-extended-stats {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: var(--accent-neon-cyan);
+            font-weight: 600;
+        }
+
+        .stat-divider {
+            width: 4px;
+            height: 4px;
+            background: var(--text-dark-muted);
+            border-radius: 50%;
+        }
+
+        .theater-comprehensive-desc {
+            color: var(--text-secondary-silver);
+            font-size: 1.02rem;
+            line-height: 1.65;
+            font-weight: 300;
+            max-width: 850px;
+        }
+
+        /* --- Premium Empty Space Footer System --- */
+        footer {
+            padding: 60px 6%;
+            border-top: 1px solid var(--border-ultra-thin);
+            background: var(--bg-deep-matte);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.85rem;
+            color: var(--text-dark-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .footer-link-item {
+            color: var(--text-dark-muted);
+            text-decoration: none;
+            transition: var(--transition-snappy);
+            cursor: pointer;
+        }
+
+        .footer-link-item:hover {
+            color: var(--accent-neon-cyan);
+        }
+
+        /* --- System Utilities & Animations --- */
+        @media(max-width: 768px) {
+            .billboard-master-stage { height: 70vh; }
+            .regal-gold-title, .fiery-orange-title, .cyber-cyan-title { font-size: 2.8rem; }
+            .cinema-theater-overlay { padding: 10px; }
+            .theater-structural-title { font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">
-            <svg viewBox="0 0 24 24">
-                <defs>
-                    <linearGradient id="cyan-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#00f2fe" />
-                        <stop offset="100%" stop-color="#4facfe" />
-                    </linearGradient>
-                </defs>
-                <path d='M4 6H14C15.1 6 16 6.9 16 8V16C16 17.1 15.1 18 14 18H4C2.9 18 2 17.1 2 16V8C2 6.9 2.9 6 4 6Z'/>
-                <path d='M23 7.5L18 11V13L23 16.5V7.5Z'/>
-            </svg>
-            NetTube
+    <!-- Premium Master Command Header -->
+    <header id="globalHeader">
+        <div class="brand-logo-container" onclick="scrollToTop()">
+            <div class="brand-logo">NETTUBE</div>
         </div>
-        <div class="tab-container">
-            <button class="tab-btn active">Movies</button>
-            <button class="tab-btn">Series</button>
-            <div class="active-pill"></div>
+        
+        <div class="navigation-pill-wrapper" id="pillController">
+            <div class="sliding-pill-backdrop" id="pillSlider"></div>
+            <button class="nav-pill-trigger active" data-pipeline="movies">Movies</button>
+            <button class="nav-pill-trigger" data-pipeline="series">Series</button>
+        </div>
+
+        <div class="utility-nav-box">
+            <button class="search-trigger-icon" onclick="toggleSearchFeedback()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
         </div>
     </header>
 
-    <!-- Fixed Billboard Block with Stable Black Background & Prompt -->
-    <section class="billboard-container">
-        <div class="media-placeholder-screen">
-            <h2>Press Play</h2>
-            <p>Select a title below or hit play to start your movie</p>
-            <button class="apple-glass-btn btn-play">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z"/>
-                </svg>
-                Play Movie
-            </button>
-        </div>
-    </section>
+    <!-- Interactive Immersive Hero Billboard Module -->
+    <section class="billboard-master-stage" id="heroBillboard"></section>
 
-    <main class="shelf">
-        <h2>Recently Added</h2>
-        <div class="library-content-view">
-            <div class="movie-grid">
-                <div class="movie-card">
-                    <div class="poster-container">
-                        <div class="poster-art" style="background: #151518; width: 100%; height: 100%;"></div>
-                    </div>
-                    <div class="movie-card-title">Sample Movie Feature</div>
-                </div>
-            </div>
+    <!-- Genre Dynamic Ribbon Filter Strip -->
+    <div class="genre-filtration-belt" id="genreFilterBelt"></div>
+
+    <!-- Master Layout Core Content Row -->
+    <main class="shelf-container-block">
+        <div class="shelf-header-row">
+            <h2 class="shelf-headline" id="shelfMainHeadline">Featured Curations</h2>
+            <div class="shelf-counter-metric" id="shelfCounter">Showing 0 Content Links</div>
         </div>
+        <div class="cinematic-responsive-grid" id="mainContentGrid"></div>
     </main>
 
-    <!-- Complete Blackout Glitch-Free Detailed Viewer Overlay -->
-    <div class="detail-overlay" id="videoOverlay">
-        <div class="media-placeholder-screen">
-            <h2>Press Play</h2>
-            <p>Ready to start playing the movie</p>
-            <button class="apple-glass-btn btn-play">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z"/>
-                </svg>
-                Play Now
-            </button>
+    <!-- Isolated Anti-Glitch Cinema Theater Overlay (Modal Engine) -->
+    <div class="cinema-theater-overlay" id="globalTheaterModal">
+        <div class="theater-enclosure-window">
+            <div class="theater-video-chassis" id="theaterVideoChassis">
+                <video class="native-video-pipeline" id="theaterVideoElement" controls autoplay playsinline></video>
+            </div>
+            <div class="theater-metadata-block">
+                <div class="theater-header-flex-row">
+                    <h2 class="theater-structural-title" id="theaterTitle">Asset Pipeline Allocation...</h2>
+                    <button class="theater-dismissal-trigger" id="theaterCloseTrigger">&times;</button>
+                </div>
+                <div class="theater-extended-stats" id="theaterStatsRow"></div>
+                <p class="theater-comprehensive-desc" id="theaterDescription"></p>
+            </div>
         </div>
     </div>
 
+    <!-- Layout Base System Footer Footer -->
+    <footer>
+        <div>&copy; 2026 NetTube Architecture Corp. Built for pure immersive premium streaming performance.</div>
+        <div class="footer-links">
+            <span class="footer-link-item" onclick="alert('NetTube Premium Framework v4.9.2 Active (Zero Bugs)')">System Status</span>
+            <span class="footer-link-item" onclick="scrollToTop()">Back to Top</span>
+        </div>
+    </footer>
+
+    <!-- Comprehensive, High-Fidelity JavaScript Runtime Matrix Engine -->
+    <script>
+        /* --- Massive High-Fidelity Extended Content Databases --- */
+        const globalMediaArchitecture = {
+            movies: [
+                {
+                    id: "mov-alpha-01",
+                    title: "Michael",
+                    description: "The definitive cinematic portrait celebrating the complex legacy, timeless artistry, and internal world of the King of Pop.",
+                    backdrop: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1920",
+                    streamUrl: "https://archive.org/download/sample-mp4-video/sample-mp4-video.mp4",
+                    typographyClass: "regal-gold-title",
+                    genre: "Drama",
+                    duration: "2h 45m",
+                    rating: "9.6 IMDB",
+                    year: "2026",
+                    sub: "Biopic • Premium Quality 4K"
+                },
+                {
+                    id: "mov-alpha-02",
+                    title: "GOAT",
+                    description: "An adrenaline-fueled dive into tactical supremacy where elite drivers confront high-stakes rivalries on global circuits.",
+                    backdrop: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1920",
+                    streamUrl: "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
+                    typographyClass: "fiery-orange-title",
+                    genre: "Action",
+                    duration: "2h 12m",
+                    rating: "8.9 IMDB",
+                    year: "2025",
+                    sub: "Action • High Octane HDR"
+                },
+                {
+                    id: "mov-alpha-03",
+                    title: "Despicable Me 4",
+                    description: "Gru, Lucy, and the girls welcome a new member to the family, Gru Jr., who is intent on tormenting his dad.",
+                    backdrop: "https://images.unsplash.com/photo-1608889174637-3c44f6326f2a?q=80&w=1920",
+                    streamUrl: "https://archive.org/download/sample-mp4-video/sample-mp4-video.mp4",
+                    typographyClass: "cyber-cyan-title",
+                    genre: "Family",
+                    duration: "1h 34m",
+                    rating: "7.4 IMDB",
+                    year: "2024",
+                    sub: "Animation • Family Choice"
+                },
+                {
+                    id: "mov-beta-04",
+                    title: "Mortal Kombat 1",
+                    description: "A dangerous journey through alternative dimensions to assert dominance over realms. Real power comes with immense sacrifice.",
+                    backdrop: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1920",
+                    streamUrl: "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
+                    typographyClass: "fiery-orange-title",
+                    genre: "Sci-Fi",
+                    duration: "2h 05m",
+                    rating: "8.1 IMDB",
+                    year: "2024",
+                    sub: "Sci-Fi • Fantasy Gore"
+                },
+                {
+                    id: "mov-beta-05",
+                    title: "The BFG",
+                    description: "An extraordinary collaborative fantasy voyage between a young orphan girl and a spectacular gentle giant who introduces her to wonders.",
+                    backdrop: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1920",
+                    streamUrl: "https://archive.org/download/sample-mp4-video/sample-mp4-video.mp4",
+                    typographyClass: "regal-gold-title",
+                    genre: "Fantasy",
+                    duration: "1h 57m",
+                    rating: "7.9 IMDB",
+                    year: "2016",
+                    sub: "Fantasy • Family Classic"
+                },
+                {
+                    id: "mov-gamma-06",
+                    title: "Neon Horizon",
+                    description: "In the depths of a cybernetic sprawling metropolis, an elite memory thief uncovers a catastrophic structural truth hidden inside code pipelines.",
+                    backdrop: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1920",
+                    streamUrl: "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
+                    typographyClass: "cyber-cyan-title",
+                    genre: "Sci-Fi",
+                    duration: "2h 22m",
+                    rating: "9.0 IMDB",
+                    year: "2026",
+                    sub: "Sci-Fi • Cyberpunk Tech"
+                },
+                {
+                    id: "mov-gamma-07",
+                    title: "The Velocity Frontier",
+                    description: "Supersonic aviation test pilots attempt to cross the impossible light-speed physical boundary using developmental hydrogen fuel technology.",
+                    backdrop: "https://images.unsplash.com/photo-1519074002996-a69e7ac46a42?q=80&w=1920",
+                    streamUrl: "https://archive.org/download/sample-mp4-video/sample-mp4-video.mp4",
+                    typographyClass: "fiery-orange-title",
+                    genre: "Action",
+                    duration: "1h 59m",
+                    rating: "8.5 IMDB",
+                    year: "2025",
+                    sub: "Action • High Speed IMAX"
+                },
+                {
+                    id: "mov-delta-08",
+                    title: "Chronicles of Dust",
+                    description: "An epic post-apocalyptic narrative detailing tribal conflicts centered entirely around structural extraction nodes in barren deserts.",
+                    backdrop: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1920",
+                    streamUrl: "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
+                    typographyClass: "regal-gold-title",
+                    genre: "Drama",
+                    duration: "2h 31m",
+                    rating: "8.8 IMDB",
+                    year: "2024",
+                    sub: "Drama • Cinematic Masterpiece"
+                }
+            ],
+            series: [
+                {
+                    id: "ser-omega-01",
+                    title: "Squid Game (Season 1)",
+                    description: "Hundreds of cash-strapped players accept a strange invitation to compete in children's games. Inside, a tempting prize awaits with deadly high stakes.",
+                    backdrop: "https://images.unsplash.com/photo-1635805737707-575885ab0820?q=80&w=1920",
+                    streamUrl: "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
+                    typographyClass: "fiery-orange-title",
+                    genre: "Drama",
+                    duration: "9 Episodes",
+                    rating: "9.3 IMDB",
+                    year: "S1",
+                    sub: "S1:E1 Red Light, Green Light"
+                },
+                {
+                    id: "ser-omega-02",
+                    title: "Shadow Syndicate",
+                    description: "An analytical deep dive into subterranean intelligence operations controlling international networks from deep corporate dark sectors.",
+                    backdrop: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920",
+                    streamUrl: "https://archive.org/download/sample-mp4-video/sample-mp4-video.mp4",
+                    typographyClass: "cyber-cyan-title",
+                    genre: "Thriller",
+                    duration: "10 Episodes",
+                    rating: "8.7 IMDB",
+                    year: "S1",
+                    sub: "S1 Complete Boxset"
+                },
+                {
+                    id: "ser-phi-03",
+                    title: "Apex Outlaws",
+                    description: "A high stakes documentary chronicling the hidden underground tracking mechanics used to locate elite international artwork escape squads.",
+                    backdrop: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920",
+                    streamUrl: "https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4",
+                    typographyClass: "regal-gold-title",
+                    genre: "Documentary",
+                    duration: "6 Episodes",
+                    rating: "9.1 IMDB",
+                    year: "Limited",
+                    sub: "6 Part Limited Event"
+                },
+                {
+                    id: "ser-phi-04",
+                    title: "Retrograde Matrix",
+                    description: "When an experimental physicist inadvertently shifts historical timeline metrics, he must trace systemic anomalies to escape paradox errors.",
+                    backdrop: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1920",
+                    streamUrl: "https://archive.org/download/sample-mp4-video/sample-mp4-video.mp4",
+                    typographyClass: "cyber-cyan-title",
+                    genre: "Sci-Fi",
+                    duration: "8 Episodes",
+                    rating: "8.6 IMDB",
+                    year: "S2",
+                    sub: "Season 2 Return"
+                }
+            ]
+        };
+
+        /* --- Application Engine Runtime State Tracker --- */
+        let activePipeline = "movies";
+        let activeGenreFilter = "All Channels";
+
+        /* --- Global DOM Interface Node Cache --- */
+        const globalHeader = document.getElementById("globalHeader");
+        const pillController = document.getElementById("pillController");
+        const pillSlider = document.getElementById("pillSlider");
+        const heroBillboard = document.getElementById("heroBillboard");
+        const genreFilterBelt = document.getElementById("genreFilterBelt");
+        const mainContentGrid = document.getElementById("mainContentGrid");
+        const shelfMainHeadline = document.getElementById("shelfMainHeadline");
+        const shelfCounter = document.getElementById("shelfCounter");
+
+        // Cinematic Theater Layer Selectors
+        const globalTheaterModal = document.getElementById("globalTheaterModal");
+        const theaterVideoElement = document.getElementById("theaterVideoElement");
+        const theaterVideoChassis = document.getElementById("theaterVideoChassis");
+        const theaterTitle = document.getElementById("theaterTitle");
+        const theaterStatsRow = document.getElementById("theaterStatsRow");
+        const theaterDescription = document.getElementById("theaterDescription");
+        const theaterCloseTrigger = document.getElementById("theaterCloseTrigger");
+
+        /* --- Lifecycle Initialization Event Mappings --- */
+        window.addEventListener("DOMContentLoaded", () => {
+            initializeLayoutMechanics();
+            renderApplicationState();
+        });
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 40) {
+                globalHeader.classList.add("scrolled");
+            } else {
+                globalHeader.classList.remove("scrolled");
+            }
+        });
+
+        window.addEventListener("resize", synchronizePillGeometry);
+
+        /* --- Core Controller Allocation Router --- */
+        pillController.addEventListener("click", (event) => {
+            const validTarget = event.target.closest(".nav-pill-trigger");
+            if (!validTarget) return;
+
+            document.querySelectorAll(".nav-pill-trigger").forEach(pill => pill.classList.remove("active"));
+            validTarget.classList.add("active");
+
+            activePipeline = validTarget.dataset.pipeline;
+            activeGenreFilter = "All Channels"; // Reset lookups on switch
+            
+            synchronizePillGeometry();
+            renderApplicationState();
+        });
+
+        function initializeLayoutMechanics() {
+            synchronizePillGeometry();
+        }
+
+        function synchronizePillGeometry() {
+            const currentActiveNode = pillController.querySelector(".nav-pill-trigger.active");
+            if (currentActiveNode) {
+                pillSlider.style.width = `${currentActiveNode.offsetWidth}px`;
+                pillSlider.style.left = `${currentActiveNode.offsetLeft}px`;
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleSearchFeedback() {
+            alert("Universal Search Engine Operational. Type matching characters to access hidden streams.");
+        }
+
+        /* --- Genre Collection Tag Parser --- */
+        function rebuildGenreRibbonBelt() {
+            const databaseContext = globalMediaArchitecture[activePipeline];
+            const uniqueGenres = ["All Channels"];
+            
+            databaseContext.forEach(item => {
+                if (item.genre && !uniqueGenres.includes(item.genre)) {
+                    uniqueGenres.push(item.genre);
+                }
+            });
+
+            genreFilterBelt.innerHTML = "";
+            uniqueGenres.forEach(genreName => {
+                const buttonElement = document.createElement("button");
+                buttonElement.className = `genre-pill ${activeGenreFilter === genreName ? 'active' : ''}`;
+                buttonElement.textContent = genreName;
+                buttonElement.addEventListener("click", () => {
+                    activeGenreFilter = genreName;
+                    document.querySelectorAll(".genre-pill").forEach(p => p.classList.remove("active"));
+                    buttonElement.classList.add("active");
+                    executeFilteredShelfRender();
+                });
+                genreFilterBelt.appendChild(buttonElement);
+            });
+        }
+
+        /* --- Core Render Engine Pipeline Matrix --- */
+        function renderApplicationState() {
+            rebuildGenreRibbonBelt();
+            executeFilteredShelfRender();
+        }
+
+        function executeFilteredShelfRender() {
+            const baselineData = globalMediaArchitecture[activePipeline];
+            
+            // Filter down data pipeline streams matching selected tags
+            const filteredDataset = baselineData.filter(item => {
+                if (activeGenreFilter === "All Channels") return true;
+                return item.genre === activeGenreFilter;
+            });
+
+            // 1. Update Shelf Headers and Metadata Metrics
+            shelfMainHeadline.textContent = activePipeline === "movies" ? "Premium Cinema Selection" : "Premium Television Networks";
+            shelfCounter.textContent = `Displaying ${filteredDataset.length} Active Video Nodes`;
+
+            // 2. Refresh Immersive Billboard Core Layout State using Row Item 0
+            if (baselineData.length > 0) {
+                const masterBillboardAsset = baselineData[0];
+                heroBillboard.style.backgroundImage = `url('${masterBillboardAsset.backdrop}')`;
+                heroBillboard.innerHTML = `
+                    <div class="billboard-core-narrative">
+                        <div class="billboard-meta-tagline">
+                            <span class="meta-badge">${masterBillboardAsset.year}</span>
+                            <span>•</span>
+                            <span>${masterBillboardAsset.genre}</span>
+                            <span>•</span>
+                            <span style="color:var(--accent-electric-blue)">${masterBillboardAsset.rating}</span>
+                        </div>
+                        <h1 class="${masterBillboardAsset.typographyClass}">${masterBillboardAsset.title}</h1>
+                        <p class="billboard-abstract-summary">${masterBillboardAsset.description}</p>
+                        <div class="billboard-action-row">
+                            <button class="primary-cinema-btn" onclick="engageTheaterMatrix('${activePipeline}', '${masterBillboardAsset.id}')">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d='M8 5v14l11-7z'/></svg>
+                                Stream Feature
+                            </button>
+                            <button class="secondary-cinema-btn" onclick="alert('Asset Added to Local Device Memory Cache.')">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                My List
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // 3. Render Grid System Shelves
+            mainContentGrid.innerHTML = "";
+            
+            if (filteredDataset.length === 0) {
+                mainContentGrid.innerHTML = `<div style="grid-column: 1/-1; padding: 40px text-align: center; color: var(--text-dark-muted)">No matching video pipeline channels located for this criteria.</div>`;
+                return;
+            }
+
+            filteredDataset.forEach(mediaNode => {
+                const gridCardElement = document.createElement("div");
+                gridCardElement.className = "cinematic-card";
+                gridCardElement.innerHTML = `
+                    <div class="card-thumbnail-viewport">
+                        <img src="${mediaNode.backdrop}" class="card-image-asset" alt="${mediaNode.title}" loading="lazy">
+                        <div class="card-hover-overlay-controls">
+                            <div class="card-play-trigger-bubble">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d='M8 5v14l11-7z'/></svg>
+                            </div>
+                        </div>
+                        <span class="card-runtime-pill">${mediaNode.duration}</span>
+                    </div>
+                    <div class="card-metadata-payload">
+                        <h3 class="card-structural-title">${mediaNode.title}</h3>
+                        <div class="card-structural-sub">
+                            <span style="color: var(--accent-neon-cyan)">${mediaNode.rating}</span>
+                            <span class="stat-divider"></span>
+                            <span>${mediaNode.year}</span>
+                            <span class="stat-divider"></span>
+                            <span style="background: rgba(255,255,255,0.05); padding: 1px 5px; border-radius:3px;">${mediaNode.genre}</span>
+                        </div>
+                        <p class="card-abstract-snippet">${mediaNode.description}</p>
+                    </div>
+                `;
+                
+                gridCardElement.addEventListener("click", () => {
+                    engageTheaterMatrix(activePipeline, mediaNode.id);
+                });
+                
+                mainContentGrid.appendChild(gridCardElement);
+            });
+        }
+
+        /* --- Premium Multi-Layer Theater Pipeline Engine Lifecycle --- */
+        function engageTheaterMatrix(categoryPipeline, uniqueId) {
+            const targetsPool = globalMediaArchitecture[categoryPipeline];
+            const focusedAsset = targetsPool.find(item => item.id === uniqueId);
+            
+            if (!focusedAsset) return;
+
+            // Lock structural background canvas to mask buffering anomalies
+            theaterVideoChassis.style.backgroundImage = `url('${focusedAsset.backdrop}')`;
+            
+            // Populating Text Track Descriptors
+            theaterTitle.textContent = focusedAsset.title;
+            theaterDescription.textContent = focusedAsset.description;
+
+            // Reconstruct Extended Stats Row
+            theaterStatsRow.innerHTML = `
+                <span>Release Year: ${focusedAsset.year}</span>
+                <span class="stat-divider"></span>
+                <span>Runtime Metric: ${focusedAsset.duration}</span>
+                <span class="stat-divider"></span>
+                <span>System Rating: ${focusedAsset.rating}</span>
+                <span class="stat-divider"></span>
+                <span style="color: #fff; background: rgba(0, 242, 254, 0.2); padding: 2px 8px; border-radius: 4px;">HD Direct Link</span>
+            `;
+
+            // Assign Stream Target Pointer Safe Source
+            theaterVideoElement.src = focusedAsset.streamUrl;
+            
+            // Activate Viewport Visibility Layers
+            globalTheaterModal.classList.add("active");
+            document.body.style.overflow = "hidden"; // Prevent background structural scrolling
+            
+            theaterVideoElement.load();
+            theaterVideoElement.play().catch(() => {
+                console.log("System security auto-halted background media play tracking.");
+            });
+        }
+
+        function terminateTheaterMatrix() {
+            globalTheaterModal.classList.remove("active");
+            document.body.style.overflow = ""; // Re-engage document scrolling safely
+            
+            theaterVideoElement.pause();
+            theaterVideoElement.src = ""; // Complete pipeline memory drop tracking
+        }
+
+        /* --- Teardown Operational Listeners --- */
+        theaterCloseTrigger.addEventListener("click", terminateTheaterMatrix);
+        
+        globalTheaterModal.addEventListener("click", (event) => {
+            if (event.target === globalTheaterModal) {
+                terminateTheaterMatrix();
+            }
+        });
+
+        // Map Escape Key directly to video teardown pipeline
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && globalTheaterModal.classList.contains("active")) {
+                terminateTheaterMatrix();
+            }
+        });
+    </script>
 </body>
 </html>
