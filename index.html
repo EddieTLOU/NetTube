@@ -43,7 +43,7 @@
             border: 1px solid rgba(255, 255, 255, 0.12);
             color: #ffffff;
             box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15), 0 8px 32px rgba(0, 0, 0, 0.3);
-            border-radius: 50px; /* Perfect Apple Capsule Pill shape */
+            border-radius: 50px;
             cursor: pointer;
             font-family: 'Inter', sans-serif;
             font-weight: 500;
@@ -79,7 +79,6 @@
             background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
         }
 
-        /* NetTube Logo Text with Electric Cyan Theme */
         .logo {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.9rem;
@@ -206,7 +205,6 @@
             filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
         }
 
-        /* Theme Text Headers */
         .billboard-content h1.blue-goat-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 4.2rem;
@@ -265,7 +263,6 @@
             box-shadow: none;
         }
 
-        /* Hover Glow Button Variations */
         .btn-play.fiery-glow:hover {
             box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 0 30px rgba(255, 67, 0, 0.4);
             border-color: rgba(255, 67, 0, 0.5);
@@ -437,34 +434,32 @@
             margin-bottom: 60px;
         }
 
-        /* ==========================================
-           BUG FIXED CINEMATIC VIDEO PLAYER CANVAS
-           ========================================== */
+        /* =======================================================
+           RE-ENGINEERED PERMANENT BACKDROP LAYER (ANTI-GLITCH FIX)
+           ======================================================= */
         .modal-player-box {
             position: relative;
             width: 100%;
             aspect-ratio: 16 / 9;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             background-color: #000000;
             overflow: hidden;
         }
 
-        /* CRITICAL HOVER FIX: Force the background poster context to lock its properties layout state permanently */
-        .modal-player-box::before {
+        /* This pseudo-element holds the wallpaper locked safely underneath video states */
+        .modal-player-box::after {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: inherit;
-            background-size: inherit;
-            background-position: inherit;
-            background-repeat: inherit;
+            background-image: var(--modal-bg-fallback);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             z-index: 1;
-            pointer-events: none; /* Prevents nested element interaction from wiping the container display source */
+            pointer-events: none;
+            display: block;
         }
 
         .modal-player-box video {
@@ -473,7 +468,8 @@
             object-fit: cover;
             display: block;
             position: relative;
-            z-index: 2; /* Sits cleanly over static background layer code blocks */
+            z-index: 2; /* Sits clean over backdrop stack */
+            background: transparent;
         }
 
         .modal-placeholder-image {
@@ -503,6 +499,7 @@
             opacity: 0;
             transition: opacity 0.3s ease;
             box-shadow: inset 0 1px 1px rgba(255,255,255,0.1), 0 10px 30px rgba(0,0,0,0.5);
+            pointer-events: auto;
         }
 
         .modal-player-box:hover .custom-player-controls {
@@ -585,7 +582,6 @@
             display: none;
         }
 
-        /* Tab Layout Accent Classes */
         .modal-info h2.cold-title { background: linear-gradient(180deg, #ffffff 20%, #a1c4fd 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .modal-info h2.fiery-title { background: linear-gradient(180deg, #ff9900 0%, #ff3300 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .modal-info h2.blue-title { font-family: 'Orbitron', sans-serif; background: linear-gradient(180deg, #00ffff 0%, #0088ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -671,7 +667,6 @@
             font-size: 0.88rem;
         }
 
-        /* Glass Floating Overlay Dismiss Button Close styling */
         .btn-close {
             position: absolute;
             top: 25px;
@@ -745,7 +740,7 @@
                 <video id="tab-video-player" preload="metadata"></video>
                 <img id="tab-image-placeholder" class="modal-placeholder-image" src="" alt="Fallback Content Frame">
 
-                <!-- Sleek custom Apple Glass Core Control Deck UI -->
+                <!-- Custom Control Deck UI -->
                 <div id="custom-controls" class="custom-player-controls glass-panel">
                     <button id="ctrl-play-btn" class="player-ctrl-btn" onclick="togglePlayerPlayback()">▶</button>
                     
@@ -864,7 +859,7 @@
             }
         };
 
-        // Cache Element Selections
+        // Cache Elements
         const billboard = document.getElementById('hero-billboard');
         const heroTitle = document.getElementById('hero-title');
         const heroLogoImg = document.getElementById('hero-logo-img');
@@ -885,15 +880,12 @@
         const modalEpisodesSection = document.getElementById('modal-episodes-section');
         const episodesGrid = document.getElementById('episodes-grid');
 
-        // Custom Player Control Hooks
+        // Control Deck hooks
         const ctrlPlayBtn = document.getElementById('ctrl-play-btn');
         const ctrlProgress = document.getElementById('ctrl-timeline-progress');
         const ctrlTimeText = document.getElementById('ctrl-time-text');
         const customControlsDeck = document.getElementById('custom-controls');
 
-        // ==========================================
-        // BILLBOARD BANNER UPDATE ENGINE
-        // ==========================================
         function setupBillboardBanner(id, scope) {
             const db = (scope === 'movies') ? moviesDatabase : seriesDatabase;
             const data = db[id];
@@ -937,9 +929,6 @@
             }
         }
 
-        // ==========================================
-        // GRID MEDIA CARD GENERATION ENGINE
-        // ==========================================
         function buildMediaLibraryGrid(scope) {
             libraryGrid.innerHTML = '';
             const db = (scope === 'movies') ? moviesDatabase : seriesDatabase;
@@ -977,9 +966,6 @@
             });
         }
 
-        // ==========================================
-        // APPLE TAB VIEW CONTROL SWITCHER
-        // ==========================================
         function switchLibraryTab(scope) {
             if (currentTabScope === scope) return;
             currentTabScope = scope;
@@ -1006,14 +992,13 @@
         }
 
         // ==========================================
-        // IMMERSIVE MULTIMEDIA PLAYER CONTROLLER
+        // IMMERSIVE MULTIMEDIA LAUNCHER
         // ==========================================
         function launchMovieTab(id, scope) {
             const db = (scope === 'movies') ? moviesDatabase : seriesDatabase;
             const data = db[id];
             if (!data) return;
 
-            // Clean reset state properties on window wake
             tabPlayer.pause();
             tabPlayer.src = '';
             ctrlPlayBtn.textContent = '▶';
@@ -1023,8 +1008,8 @@
             detailModalBox.className = 'detail-modal glass-panel';
             modalTitle.className = '';
 
-            // STICKY BUG FIX: The image layout property binds perfectly without inner canvas cluttering
-            playerFrameBox.style.backgroundImage = `url('${data.billboardPosterUrl}')`;
+            // FIXED: Set background via CSS custom variable to keep it locked inside the safe pseudo-element
+            playerFrameBox.style.setProperty('--modal-bg-fallback', `url('${data.billboardPosterUrl}')`);
 
             if (data.themeStyle === 'regal-gold') {
                 detailModalBox.classList.add('gold-modal-glow');
@@ -1095,9 +1080,6 @@
             }, 10);
         }
 
-        // ==========================================
-        // CUSTOM HTML5 CUSTOM CONTROL LOGIC
-        // ==========================================
         function togglePlayerPlayback() {
             if (tabPlayer.paused || tabPlayer.ended) {
                 tabPlayer.play();
@@ -1108,13 +1090,10 @@
             }
         }
 
-        // Update tracking timeline dynamically
         tabPlayer.addEventListener('timeupdate', () => {
             if (!tabPlayer.duration) return;
             const percentage = (tabPlayer.currentTime / tabPlayer.duration) * 100;
             ctrlProgress.style.width = `${percentage}%`;
-            
-            // Format time readouts
             ctrlTimeText.textContent = `${formatDurationUnits(tabPlayer.currentTime)} / ${formatDurationUnits(tabPlayer.duration)}`;
         });
 
@@ -1171,7 +1150,6 @@
             if (e.key === 'Escape') closeMovieTab();
         });
 
-        // Application initialization runtime
         window.addEventListener('DOMContentLoaded', () => {
             setupBillboardBanner('goat', 'movies');
             buildMediaLibraryGrid('movies');
