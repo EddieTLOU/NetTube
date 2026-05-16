@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NetTube</title>
-    <!-- Premium Cinematic / Apple UI Typography Fonts (Plus Neon/Cyber Font styles) -->
+    <!-- Premium Cinematic / Apple UI Typography Fonts (Plus Neon/Cyber/Fiery Font styles) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@300;400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@
             background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
         }
 
-        /* Upgraded NetTube Logo Text with Electric Cyan Theme */
+        /* NetTube Logo Text with Electric Cyan Theme */
         .logo {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.9rem;
@@ -99,7 +99,7 @@
             max-width: 800px;
         }
 
-        /* Title text stylized with ice cool gradient mapping */
+        /* Default Ice Cool Title text layout */
         .billboard-content h1 {
             font-family: 'Cinzel', Georgia, serif;
             font-size: 3.8rem;
@@ -112,6 +112,14 @@
             filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
         }
 
+        /* Custom Class for Mortal Kombat Fiery Orange Title Header */
+        .billboard-content h1.fiery-orange-title {
+            background: linear-gradient(180deg, #ff9900 0%, #ff3300 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 25px rgba(255, 67, 0, 0.6)) drop-shadow(0 4px 12px rgba(0,0,0,0.7));
+        }
+
         .billboard-content p {
             color: rgba(210, 225, 245, 0.85);
             font-size: 1.2rem;
@@ -121,7 +129,7 @@
             text-shadow: 0 2px 8px rgba(0,0,0,0.6);
         }
 
-        /* Large Watch Button Styling (Slightly iced cool tint on hover) */
+        /* Large Watch Button Styling */
         .btn-play {
             display: inline-flex;
             align-items: center;
@@ -141,6 +149,12 @@
             background-color: #e3f2fd;
             transform: scale(1.02);
             box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Dynamic glow hover for Mortal Kombat's play button */
+        .btn-play.fiery-glow:hover {
+            box-shadow: 0 0 20px rgba(255, 67, 0, 0.7);
+            background-color: #fff3e0;
         }
 
         /* Movie Selection Shelf */
@@ -297,6 +311,13 @@
             -webkit-text-fill-color: transparent;
         }
 
+        /* Fiery Orange style fallback header for tab view */
+        .modal-info h2.fiery-title {
+            background: linear-gradient(180deg, #ff9900 0%, #ff3300 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .modal-info p {
             color: rgba(215, 230, 250, 0.75);
             font-size: 1.2rem;
@@ -380,12 +401,6 @@
     <!-- CENTRAL DATABASE AND ARCHITECTURE SCRIPT -->
     <script>
         // ==========================================
-        // CHANGE THIS ID TO SWAP THE MAIN BACKGROUND MOVIE BANNER
-        // Options: 'dm4', 'mk1', or 'bfg'
-        // ==========================================
-        const MAIN_BILLBOARD_ID = 'bfg'; 
-
-        // ==========================================
         // MOVIE ENGINE DATA INDEX (Database IDs)
         // ==========================================
         const movieDatabase = {
@@ -393,9 +408,10 @@
                 title: 'Despicable Me 4',
                 videoUrl: 'PASTE_YOUR_DESPICABLE_ME_4_URL_HERE',
                 posterUrl: 'https://4kwallpapers.com/images/wallpapers/despicable-me-4-2560x1440-15031.jpg',
-                logoUrl: '', // Built natively inside the art asset
+                logoUrl: '', 
                 description: 'Gru, Lucy, Margo, Edith, and Agnes welcome a new member to the family, Gru Jr., who is intent on tormenting his dad. Gru faces a new nemesis in Maxime Le Mal and his femme fatale girlfriend Valentina, and the family is forced to go on the run.',
-                isColdTone: false
+                themeStyle: 'clean-poster',
+                hideTextOnBillboard: true
             },
             'mk1': {
                 title: 'Mortal Kombat 1',
@@ -403,7 +419,8 @@
                 posterUrl: 'https://4kwallpapers.com/images/wallpapers/mortal-kombat-2021-movies-poster-4096x1895-4902.jpg',
                 logoUrl: 'https://logos-world.net/wp-content/uploads/2020/11/Mortal-Kombat-Logo.png',
                 description: 'MMA fighter Cole Young seeks out Earth\'s greatest champions in order to stand against the enemies of Outworld in a high stakes battle for the universe.',
-                isColdTone: true
+                themeStyle: 'fiery-orange',
+                hideTextOnBillboard: false
             },
             'bfg': {
                 title: 'The BFG',
@@ -411,7 +428,8 @@
                 posterUrl: 'https://wallpapers.com/images/hd/the-bfg-movie-alo8v739htwfsxit.jpg',
                 logoUrl: '', 
                 description: 'An orphan girl named Sophie befriends a benevolent giant, dubbed the Big Friendly Giant, who delivers charming dreams to children. Together, they embark on a grand adventure to stop malicious, man-eating giants from invading the human world.',
-                isColdTone: true
+                themeStyle: 'cold-steel',
+                hideTextOnBillboard: true
             }
         };
 
@@ -429,14 +447,41 @@
         const modalTitle = document.getElementById('modal-title');
         const modalDesc = document.getElementById('modal-desc');
 
+        // ==========================================
+        // DYNAMIC RANDOM ROTATOR ENGINE
+        // Selects a random ID from the available database keys on load
+        // ==========================================
+        const movieIds = Object.keys(movieDatabase);
+        const randomElementIndex = Math.floor(Math.random() * movieIds.length);
+        const MAIN_BILLBOARD_ID = movieIds[randomElementIndex]; 
+
         // Setup the Landing Billboard Config Art
         function setupBillboardBanner(id) {
             const data = movieDatabase[id];
             if (!data) return;
 
             billboard.style.backgroundImage = `url('${data.posterUrl}')`;
-            heroTitle.innerText = data.title;
-            heroDesc.innerText = data.description;
+            
+            // Check if movie layout parameters require hiding descriptive text blocks
+            if (data.hideTextOnBillboard) {
+                heroTitle.style.display = 'none';
+                heroDesc.style.display = 'none';
+            } else {
+                heroTitle.style.display = 'block';
+                heroDesc.style.display = 'block';
+                heroTitle.innerText = data.title;
+                heroDesc.innerText = data.description;
+            }
+
+            // Reset custom theme classes from the interface buttons and text layers
+            heroTitle.className = '';
+            heroPlayBtn.className = 'btn-play';
+
+            // Apply targeted fiery features strictly if Mortal Kombat is chosen
+            if (data.themeStyle === 'fiery-orange') {
+                heroTitle.className = 'fiery-orange-title';
+                heroPlayBtn.className = 'btn-play fiery-glow';
+            }
             
             // Wire the main homepage play button directly to open up its tab window
             heroPlayBtn.setAttribute('onclick', `openMovieTab('${id}')`);
@@ -476,8 +521,10 @@
             modalTitle.innerText = data.title;
             modalDesc.innerText = data.description;
 
-            // Apply specific cold-colored style filters to typography if flagged
-            if (data.isColdTone) {
+            // Handle interior overlay pop-out menu styling configurations
+            if (data.themeStyle === 'fiery-orange') {
+                modalTitle.className = 'fiery-title';
+            } else if (data.themeStyle === 'cold-steel') {
                 modalTitle.className = 'cold-title';
             } else {
                 modalTitle.className = '';
