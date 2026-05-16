@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NetTube</title>
-    <!-- Premium Cinematic / Apple UI Typography Fonts (Plus Neon/Cyber/Fiery/Golden Font styles) -->
+    <!-- Premium Cinematic / Apple UI Typography Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@300;400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
@@ -85,11 +85,6 @@
             text-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
         }
 
-        .logo img {
-            height: 35px;
-            object-fit: contain;
-        }
-
         /* ==========================================
            APPLE GLASS SEGMENTED CONTROLLER (TABS)
            ========================================== */
@@ -145,7 +140,7 @@
         .billboard-container {
             position: relative;
             width: 100%;
-            height: 70vh;
+            height: 75vh;
             min-height: 550px;
             background-size: cover;
             background-position: center 20%;
@@ -172,6 +167,17 @@
             z-index: 2;
             padding: 0 4% 60px 4%;
             max-width: 800px;
+        }
+
+        /* Large Brand Emblem Layout inside Billboard Panel */
+        .billboard-logo-img {
+            max-width: 380px;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.5));
+            display: none;
         }
 
         /* Default Ice Cool Title text layout */
@@ -251,6 +257,12 @@
             background: rgba(0, 242, 254, 0.15);
         }
 
+        .btn-play.squid-magenta-glow:hover {
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 0 25px rgba(255, 10, 140, 0.6);
+            border-color: rgba(255, 10, 140, 0.5);
+            background: rgba(255, 10, 140, 0.15);
+        }
+
         /* Custom style for Coming Soon button state */
         .btn-play.coming-soon-btn {
             background: rgba(255, 255, 255, 0.03);
@@ -314,6 +326,11 @@
             border-color: rgba(0, 242, 254, 0.3);
         }
 
+        .movie-card.squid-hover:hover {
+            box-shadow: 0 20px 40px rgba(255, 10, 140, 0.25);
+            border-color: rgba(255, 10, 140, 0.4);
+        }
+
         /* Distinct gold flare outline for the Michael Jackson portrait card */
         .movie-card.gold-flare-hover:hover {
             box-shadow: 0 20px 40px rgba(245, 175, 25, 0.25);
@@ -345,10 +362,10 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 75%;
-            max-height: 70px;
+            width: 80%;
+            max-height: 80px;
             object-fit: contain;
-            filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.8));
+            filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.9));
         }
 
         /* Badge graphic label overlays */
@@ -372,6 +389,12 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
+        .badge-magenta {
+            background: linear-gradient(135deg, #ff0a8c 0%, #a30050 100%);
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
         .movie-card-title {
             padding: 18px;
             font-size: 1.1rem;
@@ -384,7 +407,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Full Screen Immersive Detail Overlay / Tab Mode Window */
+        /* Full Screen Immersive Detail Overlay Panel */
         .detail-overlay {
             position: fixed;
             top: 0;
@@ -411,6 +434,10 @@
 
         .detail-modal.gold-modal-glow {
             box-shadow: 0 0 60px rgba(245, 175, 25, 0.15);
+        }
+
+        .detail-modal.squid-modal-glow {
+            box-shadow: 0 0 60px rgba(255, 10, 140, 0.2);
         }
 
         /* Interactive Detail Player Framework */
@@ -441,13 +468,14 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 40%;
+            width: 45%;
             max-height: 180px;
             object-fit: contain;
             z-index: 5;
             pointer-events: none;
-            filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.9));
+            filter: drop-shadow(0px 10px 25px rgba(0, 0, 0, 0.95));
             transition: opacity 0.4s ease;
+            display: none;
         }
 
         .modal-info {
@@ -458,10 +486,20 @@
             font-family: 'Cinzel', Georgia, serif;
             font-size: 2.8rem;
             font-weight: 800;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             background: linear-gradient(180deg, #ffffff 30%, #c2ffd8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .modal-season-tag {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ff0a8c;
+            margin-bottom: 20px;
+            display: none;
         }
 
         /* Custom treatment specifically for Cold Tone text headers when active inside tab */
@@ -495,9 +533,88 @@
 
         .modal-info p {
             color: rgba(215, 230, 250, 0.75);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             line-height: 1.7;
             font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        /* ==========================================
+           EPISODES INTERACTIVE SELECTOR TRACK PANEL
+           ========================================== */
+        .episodes-section {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .episodes-section h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .episode-card {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+        }
+
+        .episode-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 10, 140, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .episode-card.active-episode {
+            background: rgba(255, 10, 140, 0.12);
+            border-color: rgba(255, 10, 140, 0.6);
+        }
+
+        .ep-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .ep-number {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #ff0a8c;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ep-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .ep-btn-play {
+            margin-top: auto;
+            width: 100%;
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
         /* Overlay Interface Exit Control via Apple Glass Button Blueprint */
@@ -521,7 +638,6 @@
     <!-- Transparent Branding Bar with Integrated Tab Controller -->
     <header>
         <div class="logo">
-            <img src="logo.png" alt="NetTube Logo" onerror="this.style.display='none';">
             <span>NetTube</span>
         </div>
 
@@ -532,7 +648,6 @@
             <button id="tab-series" class="tab-btn" onclick="switchLibraryTab('series')">Series</button>
         </div>
         
-        <!-- Empty placeholder shell for balanced styling layout alignment -->
         <div style="width: 140px; display: block;"></div>
     </header>
 
@@ -540,6 +655,7 @@
     <section id="hero-billboard" class="billboard-container">
         <div class="billboard-vignette"></div>
         <div class="billboard-content">
+            <img id="hero-logo-img" class="billboard-logo-img" src="" alt="Series Branding Logo">
             <h1 id="hero-title">Loading...</h1>
             <p id="hero-desc"></p>
             <button id="hero-play-btn" class="apple-glass-btn btn-play"></button>
@@ -554,7 +670,7 @@
         </div>
     </section>
 
-    <!-- Immersive Modal / Pop-out Window Interface Panel -->
+    <!-- Immersive Modal Window Interface Panel -->
     <div id="detail-overlay" class="detail-overlay">
         <button class="apple-glass-btn btn-close" onclick="closeMovieTab()">✕</button>
         
@@ -568,16 +684,23 @@
                 <img id="tab-image-placeholder" class="modal-placeholder-image" src="" alt="Coming Soon Artwork">
             </div>
             <div class="modal-info">
+                <div id="modal-season-tag" class="modal-season-tag">Season 1</div>
                 <h2 id="modal-title">Movie Title</h2>
                 <p id="modal-desc">Movie description information blocks go here...</p>
+
+                <!-- SERIES EPISODE SHELF COMPONENT PANEL -->
+                <div id="modal-episodes-section" class="episodes-section">
+                    <h3 id="episode-list-title">Episodes (Season 1)</h3>
+                    <div id="episodes-grid" class="episodes-grid"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- CENTRAL DATABASE AND ARCHITECTURE SCRIPT -->
     <script>
-        // Track the current active library scope
         let currentTabScope = 'movies';
+        let currentActiveEpisodeIndex = 0;
 
         // ==========================================
         // CONTENT ENGINE SEPARATED INDEXES 
@@ -585,7 +708,7 @@
         const moviesDatabase = {
             'michael': {
                 title: 'Michael',
-                videoUrl: '', // Kept empty -> triggers coming soon state automatically
+                videoUrl: '', 
                 billboardPosterUrl: 'https://4kwallpapers.com/images/walls/thumbs_2t/25965.jpg',
                 libraryPosterUrl: 'https://lionsgate.brightspotcdn.com/e7/e6/4ea9816e445e95f4ba96339a54e1/maven-27x40-1sht-ka-vrt-rgb-v16-online-crop.jpg',
                 logoUrl: '',
@@ -643,20 +766,33 @@
         const seriesDatabase = {
             'squidgame': {
                 title: 'Squid Game',
-                videoUrl: 'PASTE_YOUR_SQUID_GAME_SERIES_URL_HERE',
+                isSeries: true,
+                seasonLabel: 'Season 1',
                 billboardPosterUrl: 'https://images.ctfassets.net/4cd45et68cgf/3BJQrujAXLeXXsWXnolmvB/28845a87ecb25a0609c2e9faec57736c/EN_SQdGame_Main_PlayGround_Horizontal_RGB_PRE.jpg?w=1200',
                 libraryPosterUrl: 'https://wallpapercave.com/wp/wp15116736.webp',
-                logoUrl: '', 
+                logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Squid_Game_logo.svg/1200px-Squid_Game_logo.svg.png', 
                 description: 'Hundreds of cash-strapped players accept a strange invitation to compete in children\'s games. Inside, a tempting prize awaits with deadly high stakes. A survival game where only one walks away.',
-                themeStyle: 'clean-poster',
+                themeStyle: 'squid-magenta',
                 hideTextOnBillboard: true,
-                isComingSoon: false
+                isComingSoon: false,
+                episodes: [
+                    { name: 'Red Light, Green Light', url: 'PASTE_EPISODE_1_URL_HERE' },
+                    { name: 'Hell', url: 'PASTE_EPISODE_2_URL_HERE' },
+                    { name: 'The Man with the Umbrella', url: 'PASTE_EPISODE_3_URL_HERE' },
+                    { name: 'Stick to the Team', url: 'PASTE_EPISODE_4_URL_HERE' },
+                    { name: 'A Fair World', url: 'PASTE_EPISODE_5_URL_HERE' },
+                    { name: 'Gganbu', url: 'PASTE_EPISODE_6_URL_HERE' },
+                    { name: 'VIPs', url: 'PASTE_EPISODE_7_URL_HERE' },
+                    { name: 'Front Man', url: 'PASTE_EPISODE_8_URL_HERE' },
+                    { name: 'One Lucky Day', url: 'PASTE_EPISODE_9_URL_HERE' }
+                ]
             }
         };
 
         // UI Element Selectors
         const billboard = document.getElementById('hero-billboard');
         const heroTitle = document.getElementById('hero-title');
+        const heroLogoImg = document.getElementById('hero-logo-img');
         const heroDesc = document.getElementById('hero-desc');
         const heroPlayBtn = document.getElementById('hero-play-btn');
         const libraryGrid = document.getElementById('library-grid');
@@ -670,7 +806,10 @@
         const tabImagePlaceholder = document.getElementById('tab-image-placeholder');
         const modalLogo = document.getElementById('modal-logo');
         const modalTitle = document.getElementById('modal-title');
+        const modalSeasonTag = document.getElementById('modal-season-tag');
         const modalDesc = document.getElementById('modal-desc');
+        const modalEpisodesSection = document.getElementById('modal-episodes-section');
+        const episodesGrid = document.getElementById('episodes-grid');
 
         // ==========================================
         // DYNAMIC BANNER SELECTION MECHANICS
@@ -682,8 +821,19 @@
 
             billboard.style.backgroundImage = `url('${data.billboardPosterUrl}')`;
             
-            // Toggle core header visibility parameters
-            if (data.hideTextOnBillboard) {
+            // Clean styles reset
+            heroTitle.className = '';
+            heroPlayBtn.className = 'apple-glass-btn btn-play';
+            heroLogoImg.style.display = 'none';
+            heroLogoImg.src = '';
+
+            // Handle custom text vs logo overlays on billboard banner
+            if (data.hideTextOnBillboard && data.logoUrl) {
+                heroTitle.style.display = 'none';
+                heroLogoImg.src = data.logoUrl;
+                heroLogoImg.style.display = 'block';
+                heroDesc.style.display = 'none';
+            } else if (data.hideTextOnBillboard) {
                 heroTitle.style.display = 'none';
                 heroDesc.style.display = 'none';
             } else {
@@ -692,21 +842,18 @@
                 heroTitle.innerText = data.title;
             }
 
-            // Reset action layouts to basic Apple Glass configuration
-            heroTitle.className = '';
-            heroPlayBtn.className = 'apple-glass-btn btn-play';
-
-            // Inject custom thematic features based on layout metadata parameters
+            // Inject premium button states
             if (data.isComingSoon) {
                 heroPlayBtn.className = 'apple-glass-btn btn-play coming-soon-btn';
                 heroPlayBtn.innerHTML = `Coming Soon`;
             } else {
                 heroPlayBtn.innerHTML = `
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                    Play Content
+                    ${data.isSeries ? 'View Episodes' : 'Play Content'}
                 `;
             }
 
+            // Apply specific accent color shadows
             if (data.themeStyle === 'fiery-orange') {
                 heroTitle.className = 'fiery-orange-title';
                 heroPlayBtn.classList.add('fiery-glow');
@@ -715,9 +862,10 @@
                 heroPlayBtn.classList.add('neon-blue-glow');
             } else if (data.themeStyle === 'regal-gold') {
                 heroTitle.className = 'regal-gold-title';
+            } else if (data.themeStyle === 'squid-magenta') {
+                heroPlayBtn.classList.add('squid-magenta-glow');
             }
             
-            // Bind pop-out tab modal action launcher triggers
             heroPlayBtn.setAttribute('onclick', `openContentTab('${id}', '${scope}')`);
         }
 
@@ -734,13 +882,18 @@
                 card.className = 'movie-card glass-panel';
                 card.setAttribute('onclick', `openContentTab('${id}', '${scope}')`);
 
-                // Setup specific modifications for the Michael Jackson coming soon layout
+                // Apply unique grid visual styles based on target elements
                 if (item.themeStyle === 'regal-gold') {
                     card.classList.add('gold-flare-hover');
+                } else if (item.themeStyle === 'squid-magenta') {
+                    card.classList.add('squid-hover');
                 }
 
-                let badgeHtml = item.isComingSoon ? `<div class="card-badge badge-gold">Soon</div>` : '';
-                let logoHtml = item.logoUrl ? `<img class="card-logo-overlay" src="${item.logoUrl}" alt="${item.title} Logo">` : '';
+                let badgeHtml = '';
+                if (item.isComingSoon) badgeHtml = `<div class="card-badge badge-gold">Soon</div>`;
+                else if (item.isSeries) badgeHtml = `<div class="card-badge badge-magenta">${item.seasonLabel}</div>`;
+
+                let logoHtml = item.logoUrl ? `<img class="card-logo-overlay" src="${item.logoUrl}" alt="${item.title} Branding Logo">` : '';
 
                 card.innerHTML = `
                     <div class="poster-container">
@@ -748,14 +901,14 @@
                         <img class="poster-art" src="${item.libraryPosterUrl}" alt="${item.title} Poster Visual">
                         ${logoHtml}
                     </div>
-                    <div class="movie-card-title">${item.title}</div>
+                    <div class="movie-card-title">${item.title} ${item.isSeries ? `(${item.seasonLabel})` : ''}</div>
                 `;
                 libraryGrid.appendChild(card);
             });
         }
 
         // ==========================================
-        // INTERACTIVE SWITCHER LOGIC
+        // INTERACTIVE MAIN TAB CONTROLLER SWITCHER
         // ==========================================
         function switchLibraryTab(targetTab) {
             if (currentTabScope === targetTab) return;
@@ -779,22 +932,18 @@
                 shelfHeading.innerText = "Your Series";
             }
 
-            // Crossfade Sequence for grid view content swaps
             contentContainerView.classList.add('fade-out');
             setTimeout(() => {
                 buildGridUI(targetTab);
                 
-                // Set up the billboard header element to rotate using the selected tab context
                 const db = (targetTab === 'movies') ? moviesDatabase : seriesDatabase;
                 const keys = Object.keys(db);
-                const randomIdx = Math.floor(Math.random() * keys.length);
-                setupBillboardBanner(keys[randomIdx], targetTab);
+                setupBillboardBanner(keys[0], targetTab); // Autoload first database entity into banner slice
 
                 contentContainerView.classList.remove('fade-out');
             }, 300);
         }
 
-        // Dynamic Sizing Initializer for Pill Capsule overlays
         function initTabPillPositions() {
             const activeBtn = document.querySelector('.tab-btn.active');
             const activePill = document.getElementById('active-pill');
@@ -804,70 +953,125 @@
         }
 
         // ==========================================
-        // OVERLAY TAB PLAYER FRAME MECHANICS
+        // POP-OUT MODAL MAIN DISPLAY MECHANICS
         // ==========================================
         function openContentTab(id, scope) {
             const db = (scope === 'movies') ? moviesDatabase : seriesDatabase;
             const data = db[id];
             if (!data) return;
 
-            // Reset player and placeholder visual frame displays completely
+            // Deep visual variables cleanup loops
             tabPlayer.style.display = 'none';
             tabPlayer.src = '';
             tabImagePlaceholder.style.display = 'none';
             tabImagePlaceholder.src = '';
+            modalLogo.style.display = 'none';
+            modalLogo.src = '';
+            modalSeasonTag.style.display = 'none';
+            modalEpisodesSection.style.display = 'none';
+            episodesGrid.innerHTML = '';
             detailModalBox.className = 'detail-modal glass-panel';
 
             modalTitle.style.display = 'block';
             modalTitle.innerText = data.title;
             modalDesc.innerText = data.description;
 
-            // Handle coming soon asset block exceptions (e.g., Michael Jackson)
+            // Handle standard item distribution routes
             if (data.isComingSoon) {
                 tabImagePlaceholder.src = data.billboardPosterUrl;
                 tabImagePlaceholder.style.display = 'block';
                 detailModalBox.classList.add('gold-modal-glow');
+            } else if (data.isSeries && data.episodes && data.episodes.length > 0) {
+                // Configure specific settings for structural multi-episode streams
+                detailModalBox.classList.add('squid-modal-glow');
+                modalSeasonTag.innerText = data.seasonLabel;
+                modalSeasonTag.style.display = 'block';
+                modalEpisodesSection.style.display = 'block';
+                
+                // Automatically index first sequence block stream URL straight into main player canvas element
+                currentActiveEpisodeIndex = 0;
+                tabPlayer.src = data.episodes[0].url;
+                tabPlayer.poster = data.billboardPosterUrl;
+                tabPlayer.style.display = 'block';
+
+                // Map all nested dynamic sub-elements to the interactive structural grid view
+                data.episodes.forEach((ep, idx) => {
+                    const epCard = document.createElement('div');
+                    epCard.className = `episode-card ${idx === 0 ? 'active-episode' : ''}`;
+                    epCard.id = `ep-card-${idx}`;
+                    
+                    epCard.innerHTML = `
+                        <div class="ep-header">
+                            <span class="ep-number">Episode ${idx + 1}</span>
+                        </div>
+                        <div class="ep-title">${ep.name}</div>
+                        <button class="apple-glass-btn ep-btn-play" onclick="changeActiveEpisodeStream(${idx}, '${id}')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            Play Episode
+                        </button>
+                    `;
+                    episodesGrid.appendChild(epCard);
+                });
             } else {
                 tabPlayer.src = data.videoUrl;
                 tabPlayer.poster = data.billboardPosterUrl;
                 tabPlayer.style.display = 'block';
             }
 
-            // Apply targeted title font themes
-            if (data.themeStyle === 'fiery-orange') {
-                modalTitle.className = 'fiery-title';
-            } else if (data.themeStyle === 'cold-steel') {
-                modalTitle.className = 'cold-title';
-            } else if (data.themeStyle === 'electric-blue') {
-                modalTitle.className = 'blue-title';
-            } else if (data.themeStyle === 'regal-gold') {
-                modalTitle.className = 'gold-title';
-            } else {
-                modalTitle.className = '';
-            }
+            // Custom typography header decoration blocks injection routing
+            if (data.themeStyle === 'fiery-orange') modalTitle.className = 'fiery-title';
+            else if (data.themeStyle === 'cold-steel') modalTitle.className = 'cold-title';
+            else if (data.themeStyle === 'electric-blue') modalTitle.className = 'blue-title';
+            else if (data.themeStyle === 'regal-gold') modalTitle.className = 'gold-title';
+            else modalTitle.className = '';
 
-            // Handle standalone alpha overlay vector graphic brand emblems
+            // Render standalone structural transparency branding vector graphics
             if (data.logoUrl && data.logoUrl !== '') {
                 modalLogo.src = data.logoUrl;
                 modalLogo.style.display = 'block';
                 modalLogo.style.opacity = '1';
-            } else {
-                modalLogo.src = '';
-                modalLogo.style.display = 'none';
-                modalLogo.style.opacity = '0';
+                // Hide plain text block layout title if vector emblem graphic scales correctly
+                if (data.hideTextOnBillboard) {
+                    modalTitle.style.display = 'none';
+                }
             }
 
-            // Display overlay panel window
             detailOverlay.style.display = 'block';
             setTimeout(() => { detailOverlay.style.opacity = '1'; }, 10);
-            document.body.style.overflow = 'hidden'; // Lock background scrolling
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ==========================================
+        // STRUCTURAL EPISODE SWAP MANAGER
+        // ==========================================
+        function changeActiveEpisodeStream(targetIdx, seriesId) {
+            const data = seriesDatabase[seriesId];
+            if (!data || !data.episodes || !data.episodes[targetIdx]) return;
+
+            // Remove highlighted style tags across old selected instances elements array block
+            const pastCard = document.getElementById(`ep-card-${currentActiveEpisodeIndex}`);
+            if (pastCard) pastCard.classList.remove('active-episode');
+
+            // Apply selected focus classes straight onto modern targets array grid element
+            currentActiveEpisodeIndex = targetIdx;
+            const modernCard = document.getElementById(`ep-card-${targetIdx}`);
+            if (modernCard) modernCard.classList.add('active-episode');
+
+            // Hard reload new multimedia path target directly into the main playback architecture viewport canvas element
+            tabPlayer.pause();
+            tabPlayer.src = data.episodes[targetIdx].url;
+            tabPlayer.load();
+            tabPlayer.play();
+            
+            // Auto scroll main parent frame wrapper view container naturally straight back to header viewport segment
+            document.getElementById('detail-overlay').scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function closeMovieTab() {
             tabPlayer.pause();
             detailOverlay.style.opacity = '0';
             setTimeout(() => { detailOverlay.style.display = 'none'; }, 400);
-            document.body.style.overflow = 'auto'; // Re-enable background scrolling
+            document.body.style.overflow = 'auto';
         }
 
         // Hide overlay logo details dynamically when video plays natively
@@ -879,7 +1083,7 @@
         // App Initialization
         window.addEventListener('DOMContentLoaded', () => {
             buildGridUI('movies');
-            setupBillboardBanner('michael', 'movies'); // Default view highlights Michael Jackson biographical project
+            setupBillboardBanner('goat', 'movies'); // Default home landing focuses directly on GOAT (2026) video element
             initTabPillPositions();
         });
     </script>
