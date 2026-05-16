@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetTube</title>
+    <!-- Premium Cinematic / Apple UI Typography Fonts (Plus Neon/Cyber Font styles) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@300;400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Apple Glassmorphism Utility Class */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(35px) saturate(210%);
+            -webkit-backdrop-filter: blur(35px) saturate(210%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Transparent Top Navigation Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 4%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+        }
+
+        /* Upgraded NetTube Logo Text with Electric Cyan Theme */
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+        }
+
+        .logo img {
+            height: 35px;
+            object-fit: contain;
+        }
+
+        /* Full Edge-to-Edge Billboard Hero Banner Section */
+        .billboard-container {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            min-height: 550px;
+            background-size: cover;
+            background-position: center 20%;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        /* Netflix-style Vignette Shading to fade into dark library */
+        .billboard-vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(75deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 100%),
+                        linear-gradient(to top, #000000 0%, rgba(0,0,0,0) 25%);
+            z-index: 1;
+        }
+
+        .billboard-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 4% 60px 4%;
+            max-width: 800px;
+        }
+
+        /* Title text stylized with ice cool gradient mapping */
+        .billboard-content h1 {
+            font-family: 'Cinzel', Georgia, serif;
+            font-size: 3.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            background: linear-gradient(180deg, #ffffff 30%, #a1c4fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+        }
+
+        .billboard-content p {
+            color: rgba(210, 225, 245, 0.85);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-weight: 300;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        /* Large Watch Button Styling (Slightly iced cool tint on hover) */
+        .btn-play {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-play:hover {
+            background-color: #e3f2fd;
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Movie Selection Shelf */
+        .shelf {
+            padding: 40px 4% 60px 4%;
+            background-color: #000000;
+            position: relative;
+            z-index: 5;
+        }
+
+        .shelf h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: rgba(220, 235, 255, 0.95);
+            letter-spacing: -0.3px;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .movie-card {
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .movie-card:hover {
+            transform: scale(1.04);
+            box-shadow: 0 20px 40px rgba(0, 242, 254, 0.15);
+            border-color: rgba(0, 242, 254, 0.3);
+        }
+
+        .poster-container {
+            position: relative;
+            width: 100%;
+            height: 340px;
+            overflow: hidden;
+            background-color: #111;
+        }
+
+        .movie-card img.poster-art {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .movie-card:hover img.poster-art {
+            transform: scale(1.05);
+        }
+
+        .movie-card .card-logo-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 75%;
+            max-height: 70px;
+            object-fit: contain;
+            filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.8));
+        }
+
+        .movie-card-title {
+            padding: 18px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: rgba(225, 240, 255, 0.9);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Full Screen Immersive Detail Overlay / Tab Mode Window */
+        .detail-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 4, 12, 0.96);
+            z-index: 200;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            overflow-y: auto;
+        }
+
+        .detail-modal {
+            max-width: 1100px;
+            margin: 50px auto;
+            width: 90%;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 242, 254, 0.1);
+        }
+
+        /* Interactive Detail Player Framework */
+        .modal-player-box {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+
+        .modal-player-box video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-logo-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40%;
+            max-height: 180px;
+            object-fit: contain;
+            z-index: 5;
+            pointer-events: none;
+            filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.9));
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-info {
+            padding: 40px;
+        }
+
+        .modal-info h2 {
+            font-family: 'Cinzel', Georgia, serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(180deg, #ffffff 30%, #c2ffd8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom treatment specifically for Mortal Kombat text header when active inside tab */
+        .modal-info h2.cold-title {
+            background: linear-gradient(180deg, #ffffff 20%, #a1c4fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-info p {
+            color: rgba(215, 230, 250, 0.75);
+            font-size: 1.2rem;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* Overlay Interface Exit Control */
+        .btn-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            color: #00f2fe;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 210;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-close:hover {
+            background: rgba(0, 242, 254, 0.15);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Transparent Branding Bar -->
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="NetTube Logo" onerror="this.style.display='none';">
+            <span>NetTube</span>
+        </div>
+    </header>
+
+    <!-- Edge-to-Edge Hero Banner Container -->
+    <section id="hero-billboard" class="billboard-container">
+        <div class="billboard-vignette"></div>
+        <div class="billboard-content">
+            <h1 id="hero-title">Loading...</h1>
+            <p id="hero-desc"></p>
+            <button id="hero-play-btn" class="btn-play">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                Play Movie
+            </button>
+        </div>
+    </section>
+
+    <!-- Content Track Grid Selection Section -->
+    <section class="shelf">
+        <h2>Your Video Library</h2>
+        <div class="movie-grid" id="library-grid"></div>
+    </section>
+
+    <!-- Immersive Modal / Pop-out Window Interface Panel -->
+    <div id="detail-overlay" class="detail-overlay">
+        <button class="btn-close" onclick="closeMovieTab()">✕</button>
+        
+        <div class="detail-modal glass-panel">
+            <div class="modal-player-box">
+                <!-- Inner Float Logo Layer -->
+                <img id="modal-logo" class="modal-logo-overlay" src="" alt="Overlay Logo">
+                
+                <video id="tab-video-player" controls preload="metadata"></video>
+            </div>
+            <div class="modal-info">
+                <h2 id="modal-title">Movie Title</h2>
+                <p id="modal-desc">Movie description information blocks go here...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CENTRAL DATABASE AND ARCHITECTURE SCRIPT -->
+    <script>
+        // ==========================================
+        // CHANGE THIS ID TO SWAP THE MAIN BACKGROUND MOVIE BANNER
+        // Options: 'dm4' or 'mk1'
+        // ==========================================
+        const MAIN_BILLBOARD_ID = 'dm4'; 
+
+        // ==========================================
+        // MOVIE ENGINE DATA INDEX (Database IDs)
+        // ==========================================
+        const movieDatabase = {
+            'dm4': {
+                title: 'Despicable Me 4',
+                videoUrl: 'https://archive.org/download/mortal-kombat-bluray-1080p/Despicable%20Me%204.mp4',
+                posterUrl: 'https://4kwallpapers.com/images/wallpapers/despicable-me-4-2560x1440-15031.jpg',
+                logoUrl: '', // Built natively inside the art asset
+                description: 'Gru, Lucy, Margo, Edith, and Agnes welcome a new member to the family, Gru Jr., who is intent on tormenting his dad. Gru faces a new nemesis in Maxime Le Mal and his femme fatale girlfriend Valentina, and the family is forced to go on the run.',
+                isColdTone: false
+            },
+            'mk1': {
+                title: 'Mortal Kombat 1',
+                videoUrl: 'https://archive.org/download/mortal-kombat-bluray-1080p/Mortal%20Kombat%20%282021%29.mp4',
+                posterUrl: 'https://4kwallpapers.com/images/wallpapers/mortal-kombat-2021-movies-poster-4096x1895-4902.jpg',
+                logoUrl: 'https://logos-world.net/wp-content/uploads/2020/11/Mortal-Kombat-Logo.png',
+                description: 'MMA fighter Cole Young seeks out Earth\'s greatest champions in order to stand against the enemies of Outworld in a high stakes battle for the universe.',
+                isColdTone: true
+            }
+        };
+
+        // UI Element Selectors
+        const billboard = document.getElementById('hero-billboard');
+        const heroTitle = document.getElementById('hero-title');
+        const heroDesc = document.getElementById('hero-desc');
+        const heroPlayBtn = document.getElementById('hero-play-btn');
+        const libraryGrid = document.getElementById('library-grid');
+        
+        // Pop-out Overlay Window System Selectors
+        const detailOverlay = document.getElementById('detail-overlay');
+        const tabPlayer = document.getElementById('tab-video-player');
+        const modalLogo = document.getElementById('modal-logo');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+
+        // Setup the Landing Billboard Config Art
+        function setupBillboardBanner(id) {
+            const data = movieDatabase[id];
+            if (!data) return;
+
+            billboard.style.backgroundImage = `url('${data.posterUrl}')`;
+            heroTitle.innerText = data.title;
+            heroDesc.innerText = data.description;
+            
+            // Wire the main homepage play button directly to open up its tab window
+            heroPlayBtn.setAttribute('onclick', `openMovieTab('${id}')`);
+        }
+
+        // Build Shelf Grid Layout Loop
+        function buildLibraryUI() {
+            libraryGrid.innerHTML = '';
+            Object.keys(movieDatabase).forEach(id => {
+                const item = movieDatabase[id];
+                
+                const card = document.createElement('div');
+                card.className = 'movie-card glass-panel';
+                card.setAttribute('onclick', `openMovieTab('${id}')`);
+
+                let logoHtml = item.logoUrl ? `<img class="card-logo-overlay" src="${item.logoUrl}" alt="${item.title} Logo">` : '';
+
+                card.innerHTML = `
+                    <div class="poster-container">
+                        <img class="poster-art" src="${item.posterUrl}" alt="${item.title} Poster">
+                        ${logoHtml}
+                    </div>
+                    <div class="movie-card-title">${item.title}</div>
+                `;
+                libraryGrid.appendChild(card);
+            });
+        }
+
+        // Open custom sub-tab frame window to display data + play media stream
+        function openMovieTab(id) {
+            const data = movieDatabase[id];
+            if (!data) return;
+
+            // Load track data inside the container window mechanics
+            tabPlayer.src = data.videoUrl;
+            tabPlayer.poster = data.posterUrl;
+            modalTitle.innerText = data.title;
+            modalDesc.innerText = data.description;
+
+            // Apply specific cold-colored style filters to typography if flagged
+            if (data.isColdTone) {
+                modalTitle.className = 'cold-title';
+            } else {
+                modalTitle.className = '';
+            }
+
+            // Handle independent alpha overlay logo asset parameters
+            if (data.logoUrl && data.logoUrl !== '') {
+                modalLogo.src = data.logoUrl;
+                modalLogo.style.display = 'block';
+                modalLogo.style.opacity = '1';
+            } else {
+                modalLogo.src = '';
+                modalLogo.style.display = 'none';
+                modalLogo.style.opacity = '0';
+            }
+
+            // Display overlay tab panel smoothly
+            detailOverlay.style.display = 'block';
+            setTimeout(() => { detailOverlay.style.opacity = '1'; }, 10);
+            document.body.style.overflow = 'hidden'; // Lock down main screen scrolling
+        }
+
+        // Close window frame and shut down running media tracks completely
+        function closeMovieTab() {
+            tabPlayer.pause();
+            detailOverlay.style.opacity = '0';
+            setTimeout(() => { detailOverlay.style.display = 'none'; }, 400);
+            document.body.style.overflow = 'auto'; // Re-enable screen scrolling
+        }
+
+        // Video Player Status Event Handlers inside the overlay
+        tabPlayer.addEventListener('play', () => { modalLogo.style.opacity = '0'; });
+        tabPlayer.addEventListener('ended', () => {
+            if (modalLogo.src && modalLogo.src !== window.location.href) modalLogo.style.opacity = '1';
+        });
+
+        // App Initialization
+        buildLibraryUI();
+        setupBillboardBanner(MAIN_BILLBOARD_ID);
+    </script>
+
+</body>
+</html>
