@@ -67,6 +67,57 @@
             object-fit: contain;
         }
 
+        /* ==========================================
+           APPLE GLASS SEGMENTED CONTROLLER (TABS)
+           ========================================== */
+        .tab-container {
+            position: relative;
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            padding: 4px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .tab-btn {
+            position: relative;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 8px 24px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            z-index: 2;
+            transition: color 0.30s cubic-bezier(0.25, 1, 0.5, 1);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tab-btn.active {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* The Animated Sliding Glass Capsule Backdrop */
+        .active-pill {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            height: calc(100% - 8px);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.2), 0 4px 12px rgba(0,0,0,0.25);
+            border-radius: 9px;
+            z-index: 1;
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: none;
+        }
+
         /* Full Edge-to-Edge Billboard Hero Banner Section */
         .billboard-container {
             position: relative;
@@ -191,10 +242,41 @@
             letter-spacing: -0.3px;
         }
 
+        /* Grid View Layout with crossfade smooth transitions */
+        .library-content-view {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .library-content-view.fade-out {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
         .movie-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 30px;
+        }
+
+        /* Empty state placeholder style for Series view */
+        .empty-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px;
+            text-align: center;
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .empty-placeholder p {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 1.1rem;
+            margin-top: 10px;
         }
 
         .movie-card {
@@ -379,12 +461,22 @@
 </head>
 <body>
 
-    <!-- Transparent Branding Bar -->
+    <!-- Transparent Branding Bar with Integrated Tab Controller -->
     <header>
         <div class="logo">
             <img src="logo.png" alt="NetTube Logo" onerror="this.style.display='none';">
             <span>NetTube</span>
         </div>
+
+        <!-- Apple Glass Slider Switcher Frame -->
+        <div class="tab-container">
+            <div id="active-pill" class="active-pill"></div>
+            <button id="tab-movies" class="tab-btn active" onclick="switchLibraryTab('movies')">Movies</button>
+            <button id="tab-series" class="tab-btn" onclick="switchLibraryTab('series')">Series</button>
+        </div>
+        
+        <!-- Empty placeholder shell for balanced styling layout alignment -->
+        <div style="width: 140px; display: block;"></div>
     </header>
 
     <!-- Edge-to-Edge Hero Banner Container -->
@@ -402,8 +494,10 @@
 
     <!-- Content Track Grid Selection Section -->
     <section class="shelf">
-        <h2>Your Video Library</h2>
-        <div class="movie-grid" id="library-grid"></div>
+        <h2 id="shelf-heading">Your Movies</h2>
+        <div id="library-content-view" class="library-content-view">
+            <div class="movie-grid" id="library-grid"></div>
+        </div>
     </section>
 
     <!-- Immersive Modal / Pop-out Window Interface Panel -->
@@ -426,6 +520,9 @@
 
     <!-- CENTRAL DATABASE AND ARCHITECTURE SCRIPT -->
     <script>
+        // Track the current active library scope
+        let currentTabScope = 'movies';
+
         // ==========================================
         // MOVIE ENGINE DATA INDEX (Database IDs)
         // ==========================================
@@ -462,13 +559,13 @@
             },
             'goat': {
                 title: 'GOAT',
-                videoUrl: 'https://archive.org/download/goat-2026_202605/GOAT%20%282026%29.mp4',
+                videoUrl: 'PASTE_YOUR_GOAT_MOVIE_URL_HERE',
                 billboardPosterUrl: 'https://4kwallpapers.com/images/wallpapers/goat-2026-8k-movie-7680x4320-23667.png',
                 libraryPosterUrl: 'https://image.tmdb.org/t/p/original/bkIVlnO1MnTS6jL6qP0Ki2H6O3.jpg',
                 logoUrl: '',
                 description: 'An original action-comedy animated adventure set in an all-animal world. Will, a small pygmy goat with big dreams, gets a once-in-a-lifetime shot to join the pros and play roarball—a high-intensity, co-ed, full-contact sport dominated by the fastest, fiercest predators in the world.',
                 themeStyle: 'electric-blue',
-                hideTextOnBillboard: false // Changed to false so your title text logo shows up on the home menu!
+                hideTextOnBillboard: false
             }
         };
 
@@ -478,6 +575,8 @@
         const heroDesc = document.getElementById('hero-desc');
         const heroPlayBtn = document.getElementById('hero-play-btn');
         const libraryGrid = document.getElementById('library-grid');
+        const shelfHeading = document.getElementById('shelf-heading');
+        const contentContainerView = document.getElementById('library-content-view');
         
         // Pop-out Overlay Window System Selectors
         const detailOverlay = document.getElementById('detail-overlay');
@@ -527,8 +626,61 @@
             heroPlayBtn.setAttribute('onclick', `openMovieTab('${id}')`);
         }
 
+        // ==========================================
+        // INTERACTIVE SWITCHER LOGIC
+        // ==========================================
+        function switchLibraryTab(targetTab) {
+            if (currentTabScope === targetTab) return;
+            currentTabScope = targetTab;
+
+            // 1. Update Navigation Button Active States
+            const btnMovies = document.getElementById('tab-movies');
+            const btnSeries = document.getElementById('tab-series');
+            const activePill = document.getElementById('active-pill');
+
+            if (targetTab === 'movies') {
+                btnMovies.classList.add('active');
+                btnSeries.classList.remove('active');
+                // Slide the pill frame back to starting point
+                activePill.style.transform = 'translateX(0px)';
+                activePill.style.width = `${btnMovies.offsetWidth}px`;
+                shelfHeading.innerText = "Your Movies";
+            } else {
+                btnSeries.classList.add('active');
+                btnMovies.classList.remove('active');
+                // Calculate movement offset based on button sizing blocks
+                const moveOffset = btnMovies.offsetWidth;
+                activePill.style.transform = `translateX(${moveOffset}px)`;
+                activePill.style.width = `${btnSeries.offsetWidth}px`;
+                shelfHeading.innerText = "Your Series";
+            }
+
+            // 2. Play Animated Grid Out / Crossfade Sequence
+            contentContainerView.classList.add('fade-out');
+
+            setTimeout(() => {
+                if (targetTab === 'movies') {
+                    buildLibraryUI();
+                } else {
+                    buildSeriesUIPlaceholder();
+                }
+                // Fade view back in gracefully
+                contentContainerView.classList.remove('fade-out');
+            }, 300);
+        }
+
+        // Dynamic Sizing Initializer for Pill Capsule overlay placement
+        function initTabPillPositions() {
+            const activeBtn = document.querySelector('.tab-btn.active');
+            const activePill = document.getElementById('active-pill');
+            if (activeBtn && activePill) {
+                activePill.style.width = `${activeBtn.offsetWidth}px`;
+            }
+        }
+
         // Build Shelf Grid Layout Loop using dedicated library portrait elements
         function buildLibraryUI() {
+            libraryGrid.className = 'movie-grid';
             libraryGrid.innerHTML = '';
             Object.keys(movieDatabase).forEach(id => {
                 const item = movieDatabase[id];
@@ -548,6 +700,26 @@
                 `;
                 libraryGrid.appendChild(card);
             });
+        }
+
+        // Build a elegant empty state placeholder for the Series scope block
+        function buildSeriesUIPlaceholder() {
+            libraryGrid.className = ''; // Remove grid styling constraints for full block presentation
+            libraryGrid.innerHTML = `
+                <div class="empty-placeholder glass-panel">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                        <line x="7" y="2" x1="7" y2="22"></line>
+                        <line x="17" y="2" x1="17" y2="22"></line>
+                        <line x="2" y="12" x1="22" y2="12"></line>
+                        <line x="2" y="7" x1="7" y2="7"></line>
+                        <line x="2" y="17" x1="7" y2="17"></line>
+                        <line x="17" y="17" x1="22" y2="17"></line>
+                        <line x="17" y="7" x1="22" y2="7"></line>
+                    </svg>
+                    <p>No TV Shows or Series added yet.</p>
+                </div>
+            `;
         }
 
         // Open custom sub-tab frame window to display data + play media stream
@@ -605,8 +777,11 @@
         });
 
         // App Initialization
-        buildLibraryUI();
-        setupBillboardBanner(MAIN_BILLBOARD_ID);
+        window.addEventListener('DOMContentLoaded', () => {
+            buildLibraryUI();
+            setupBillboardBanner(MAIN_BILLBOARD_ID);
+            initTabPillPositions();
+        });
     </script>
 
 </body>
