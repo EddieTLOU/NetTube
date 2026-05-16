@@ -32,6 +32,29 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
+        /* Apple Glass Pill Overlay Style for Interactive Buttons */
+        .apple-glass-btn {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 4px 15px rgba(0, 0, 0, 0.25);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 0.2s ease, 
+                        box-shadow 0.3s ease;
+        }
+
+        .apple-glass-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: scale(1.02);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 6px 20px rgba(255, 255, 255, 0.05);
+        }
+
         /* Transparent Top Navigation Header */
         header {
             display: flex;
@@ -101,7 +124,7 @@
             font-weight: 600;
         }
 
-        /* The Animated Sliding Glass Capsule Backdrop */
+        /* Animated Sliding Glass Capsule Backdrop */
         .active-pill {
             position: absolute;
             top: 4px;
@@ -205,51 +228,42 @@
             text-shadow: 0 2px 8px rgba(0,0,0,0.6);
         }
 
-        /* Large Action Button Styling */
+        /* Integrated Apple Glass Play Button Layout */
         .btn-play {
             display: inline-flex;
             align-items: center;
             gap: 10px;
             padding: 14px 28px;
-            background-color: #ffffff;
-            color: #000000;
-            border: none;
-            border-radius: 8px;
             font-size: 1.1rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
         }
 
-        .btn-play:hover {
-            background-color: #e3f2fd;
-            transform: scale(1.02);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
-        }
-
-        /* Dynamic glow hover for Mortal Kombat's play button */
+        /* Unique Hover Glow Themes Over Apple Glass Foundation */
         .btn-play.fiery-glow:hover {
-            box-shadow: 0 0 20px rgba(255, 67, 0, 0.7);
-            background-color: #fff3e0;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 0 25px rgba(255, 67, 0, 0.5);
+            border-color: rgba(255, 67, 0, 0.4);
+            background: rgba(255, 67, 0, 0.15);
         }
 
-        /* Dynamic neon blue glow hover for GOAT's play button */
         .btn-play.neon-blue-glow:hover {
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.8);
-            background-color: #e0f7fa;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 0 25px rgba(0, 242, 254, 0.5);
+            border-color: rgba(0, 242, 254, 0.4);
+            background: rgba(0, 242, 254, 0.15);
         }
 
         /* Custom style for Coming Soon button state */
         .btn-play.coming-soon-btn {
-            background-color: rgba(255, 255, 255, 0.15);
-            color: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: none;
             cursor: default;
         }
         .btn-play.coming-soon-btn:hover {
-            background-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.03);
             transform: none;
             box-shadow: none;
+            border-color: rgba(255, 255, 255, 0.05);
         }
 
         /* Movie Selection Shelf */
@@ -486,7 +500,7 @@
             font-weight: 300;
         }
 
-        /* Overlay Interface Exit Control */
+        /* Overlay Interface Exit Control via Apple Glass Button Blueprint */
         .btn-close {
             position: absolute;
             top: 20px;
@@ -494,21 +508,11 @@
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(0, 242, 254, 0.2);
-            color: #00f2fe;
-            font-size: 1.5rem;
-            cursor: pointer;
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 210;
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .btn-close:hover {
-            background: rgba(0, 242, 254, 0.15);
-            transform: scale(1.05);
         }
     </style>
 </head>
@@ -538,7 +542,7 @@
         <div class="billboard-content">
             <h1 id="hero-title">Loading...</h1>
             <p id="hero-desc"></p>
-            <button id="hero-play-btn" class="btn-play"></button>
+            <button id="hero-play-btn" class="apple-glass-btn btn-play"></button>
         </div>
     </section>
 
@@ -552,7 +556,7 @@
 
     <!-- Immersive Modal / Pop-out Window Interface Panel -->
     <div id="detail-overlay" class="detail-overlay">
-        <button class="btn-close" onclick="closeMovieTab()">✕</button>
+        <button class="apple-glass-btn btn-close" onclick="closeMovieTab()">✕</button>
         
         <div id="detail-modal-box" class="detail-modal glass-panel">
             <div class="modal-player-box">
@@ -590,6 +594,17 @@
                 hideTextOnBillboard: false,
                 isComingSoon: true
             },
+            'goat': {
+                title: 'GOAT',
+                videoUrl: 'https://archive.org/download/goat-2026_202605/GOAT%20%282026%29.mp4',
+                billboardPosterUrl: 'https://4kwallpapers.com/images/wallpapers/goat-2026-8k-movie-7680x4320-23667.png',
+                libraryPosterUrl: 'https://image.tmdb.org/t/p/original/bkIVlnO1MnTS6jL6qP0Ki2H6O3.jpg',
+                logoUrl: '',
+                description: 'An original action-comedy animated adventure set in an all-animal world. Will, a small pygmy goat with big dreams, gets a once-in-a-lifetime shot to join the pros and play roarball.',
+                themeStyle: 'electric-blue',
+                hideTextOnBillboard: false,
+                isComingSoon: false
+            },
             'dm4': {
                 title: 'Despicable Me 4',
                 videoUrl: 'https://archive.org/download/mortal-kombat-bluray-1080p/Despicable%20Me%204.mp4',
@@ -622,17 +637,6 @@
                 themeStyle: 'cold-steel',
                 hideTextOnBillboard: true,
                 isComingSoon: false
-            },
-            'goat': {
-                title: 'GOAT',
-                videoUrl: 'https://archive.org/download/mortal-kombat-bluray-1080p/Despicable%20Me%204.mp4',
-                billboardPosterUrl: 'https://4kwallpapers.com/images/wallpapers/goat-2026-8k-movie-7680x4320-23667.png',
-                libraryPosterUrl: 'https://image.tmdb.org/t/p/original/bkIVlnO1MnTS6jL6qP0Ki2H6O3.jpg',
-                logoUrl: '',
-                description: 'An original action-comedy animated adventure set in an all-animal world. Will, a small pygmy goat with big dreams, gets a once-in-a-lifetime shot to join the pros and play roarball.',
-                themeStyle: 'electric-blue',
-                hideTextOnBillboard: false,
-                isComingSoon: false
             }
         };
 
@@ -640,9 +644,9 @@
             'squidgame': {
                 title: 'Squid Game',
                 videoUrl: 'PASTE_YOUR_SQUID_GAME_SERIES_URL_HERE',
-                billboardPosterUrl: 'https://spaceandsorcery.wordpress.com/wp-content/uploads/2021/11/sg01.jpg',
+                billboardPosterUrl: 'https://images.ctfassets.net/4cd45et68cgf/3BJQrujAXLeXXsWXnolmvB/28845a87ecb25a0609c2e9faec57736c/EN_SQdGame_Main_PlayGround_Horizontal_RGB_PRE.jpg?w=1200',
                 libraryPosterUrl: 'https://wallpapercave.com/wp/wp15116736.webp',
-                logoUrl: '', // Handled via raw imagery assets inside your designated poster links per request
+                logoUrl: '', 
                 description: 'Hundreds of cash-strapped players accept a strange invitation to compete in children\'s games. Inside, a tempting prize awaits with deadly high stakes. A survival game where only one walks away.',
                 themeStyle: 'clean-poster',
                 hideTextOnBillboard: true,
@@ -684,18 +688,17 @@
                 heroDesc.style.display = 'none';
             } else {
                 heroTitle.style.display = 'block';
-                heroDesc.style.display = 'none'; // Keeping descriptions clean off text layouts
+                heroDesc.style.display = 'none';
                 heroTitle.innerText = data.title;
             }
 
-            // Reset action layouts
+            // Reset action layouts to basic Apple Glass configuration
             heroTitle.className = '';
-            heroPlayBtn.className = 'btn-play';
-            heroPlayBtn.removeAttribute('disabled');
+            heroPlayBtn.className = 'apple-glass-btn btn-play';
 
             // Inject custom thematic features based on layout metadata parameters
             if (data.isComingSoon) {
-                heroPlayBtn.className = 'btn-play coming-soon-btn';
+                heroPlayBtn.className = 'apple-glass-btn btn-play coming-soon-btn';
                 heroPlayBtn.innerHTML = `Coming Soon`;
             } else {
                 heroPlayBtn.innerHTML = `
@@ -706,10 +709,10 @@
 
             if (data.themeStyle === 'fiery-orange') {
                 heroTitle.className = 'fiery-orange-title';
-                heroPlayBtn.className = 'btn-play fiery-glow';
+                heroPlayBtn.classList.add('fiery-glow');
             } else if (data.themeStyle === 'electric-blue') {
                 heroTitle.className = 'blue-goat-title';
-                heroPlayBtn.className = 'btn-play neon-blue-glow';
+                heroPlayBtn.classList.add('neon-blue-glow');
             } else if (data.themeStyle === 'regal-gold') {
                 heroTitle.className = 'regal-gold-title';
             }
@@ -781,7 +784,7 @@
             setTimeout(() => {
                 buildGridUI(targetTab);
                 
-                // Set up the billboard header element to rotate using the selected tab context matching indices
+                // Set up the billboard header element to rotate using the selected tab context
                 const db = (targetTab === 'movies') ? moviesDatabase : seriesDatabase;
                 const keys = Object.keys(db);
                 const randomIdx = Math.floor(Math.random() * keys.length);
@@ -876,7 +879,7 @@
         // App Initialization
         window.addEventListener('DOMContentLoaded', () => {
             buildGridUI('movies');
-            setupBillboardBanner('michael', 'movies'); // Default home banner view highlights the brand new Michael Jackson project setup
+            setupBillboardBanner('michael', 'movies'); // Default view highlights Michael Jackson biographical project
             initTabPillPositions();
         });
     </script>
