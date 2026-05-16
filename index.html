@@ -290,7 +290,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Custom treatment specifically for Mortal Kombat text header when active inside tab */
+        /* Custom treatment specifically for Cold Tone text headers when active inside tab */
         .modal-info h2.cold-title {
             background: linear-gradient(180deg, #ffffff 20%, #a1c4fd 100%);
             -webkit-background-clip: text;
@@ -381,9 +381,9 @@
     <script>
         // ==========================================
         // CHANGE THIS ID TO SWAP THE MAIN BACKGROUND MOVIE BANNER
-        // Options: 'dm4' or 'mk1'
+        // Options: 'dm4', 'mk1', or 'bfg'
         // ==========================================
-        const MAIN_BILLBOARD_ID = 'dm4'; 
+        const MAIN_BILLBOARD_ID = 'bfg'; 
 
         // ==========================================
         // MOVIE ENGINE DATA INDEX (Database IDs)
@@ -391,7 +391,7 @@
         const movieDatabase = {
             'dm4': {
                 title: 'Despicable Me 4',
-                videoUrl: 'https://archive.org/download/mortal-kombat-bluray-1080p/Despicable%20Me%204.mp4',
+                videoUrl: 'PASTE_YOUR_DESPICABLE_ME_4_URL_HERE',
                 posterUrl: 'https://4kwallpapers.com/images/wallpapers/despicable-me-4-2560x1440-15031.jpg',
                 logoUrl: '', // Built natively inside the art asset
                 description: 'Gru, Lucy, Margo, Edith, and Agnes welcome a new member to the family, Gru Jr., who is intent on tormenting his dad. Gru faces a new nemesis in Maxime Le Mal and his femme fatale girlfriend Valentina, and the family is forced to go on the run.',
@@ -403,6 +403,14 @@
                 posterUrl: 'https://4kwallpapers.com/images/wallpapers/mortal-kombat-2021-movies-poster-4096x1895-4902.jpg',
                 logoUrl: 'https://logos-world.net/wp-content/uploads/2020/11/Mortal-Kombat-Logo.png',
                 description: 'MMA fighter Cole Young seeks out Earth\'s greatest champions in order to stand against the enemies of Outworld in a high stakes battle for the universe.',
+                isColdTone: true
+            },
+            'bfg': {
+                title: 'The BFG',
+                videoUrl: 'PASTE_YOUR_THE_BFG_URL_HERE',
+                posterUrl: 'https://wallpapers.com/images/hd/the-bfg-movie-alo8v739htwfsxit.jpg',
+                logoUrl: '', 
+                description: 'An orphan girl named Sophie befriends a benevolent giant, dubbed the Big Friendly Giant, who delivers charming dreams to children. Together, they embark on a grand adventure to stop malicious, man-eating giants from invading the human world.',
                 isColdTone: true
             }
         };
