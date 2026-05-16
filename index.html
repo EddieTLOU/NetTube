@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NetTube</title>
-    <!-- Premium Cinematic / Apple UI Typography Fonts (Plus Neon/Cyber/Fiery Font styles) -->
+    <!-- Premium Cinematic / Apple UI Typography Fonts (Plus Neon/Cyber/Fiery/Golden Font styles) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@300;400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
@@ -129,6 +129,7 @@
             background-repeat: no-repeat;
             display: flex;
             align-items: flex-end;
+            transition: background-image 0.5s ease;
         }
 
         /* Netflix-style Vignette Shading to fade into dark library */
@@ -183,6 +184,18 @@
             filter: drop-shadow(0 0 25px rgba(255, 67, 0, 0.6)) drop-shadow(0 4px 12px rgba(0,0,0,0.7));
         }
 
+        /* Custom Class for Michael Jackson Premium Regal Golden Title Header */
+        .billboard-content h1.regal-gold-title {
+            font-family: 'Cinzel', Georgia, serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            background: linear-gradient(180deg, #ffe066 0%, #f5af19 50%, #e65c00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(245, 175, 25, 0.5)) drop-shadow(0 4px 15px rgba(0,0,0,0.9));
+        }
+
         .billboard-content p {
             color: rgba(210, 225, 245, 0.85);
             font-size: 1.2rem;
@@ -192,7 +205,7 @@
             text-shadow: 0 2px 8px rgba(0,0,0,0.6);
         }
 
-        /* Large Watch Button Styling */
+        /* Large Action Button Styling */
         .btn-play {
             display: inline-flex;
             align-items: center;
@@ -205,7 +218,7 @@
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
         }
 
         .btn-play:hover {
@@ -224,6 +237,19 @@
         .btn-play.neon-blue-glow:hover {
             box-shadow: 0 0 20px rgba(0, 242, 254, 0.8);
             background-color: #e0f7fa;
+        }
+
+        /* Custom style for Coming Soon button state */
+        .btn-play.coming-soon-btn {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: default;
+        }
+        .btn-play.coming-soon-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: none;
+            box-shadow: none;
         }
 
         /* Movie Selection Shelf */
@@ -260,25 +286,6 @@
             gap: 30px;
         }
 
-        /* Empty state placeholder style for Series view */
-        .empty-placeholder {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 20px;
-            text-align: center;
-            border: 2px dashed rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.01);
-        }
-
-        .empty-placeholder p {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 1.1rem;
-            margin-top: 10px;
-        }
-
         .movie-card {
             border-radius: 16px;
             overflow: hidden;
@@ -291,6 +298,12 @@
             transform: scale(1.04);
             box-shadow: 0 20px 40px rgba(0, 242, 254, 0.15);
             border-color: rgba(0, 242, 254, 0.3);
+        }
+
+        /* Distinct gold flare outline for the Michael Jackson portrait card */
+        .movie-card.gold-flare-hover:hover {
+            box-shadow: 0 20px 40px rgba(245, 175, 25, 0.25);
+            border-color: rgba(245, 175, 25, 0.4);
         }
 
         .poster-container {
@@ -322,6 +335,27 @@
             max-height: 70px;
             object-fit: contain;
             filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.8));
+        }
+
+        /* Badge graphic label overlays */
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            z-index: 3;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        .badge-gold {
+            background: linear-gradient(135deg, #f5af19 0%, #e65c00 100%);
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .movie-card-title {
@@ -361,6 +395,10 @@
             box-shadow: 0 0 50px rgba(0, 242, 254, 0.1);
         }
 
+        .detail-modal.gold-modal-glow {
+            box-shadow: 0 0 60px rgba(245, 175, 25, 0.15);
+        }
+
         /* Interactive Detail Player Framework */
         .modal-player-box {
             position: relative;
@@ -374,6 +412,14 @@
             height: 100%;
             object-fit: cover;
             display: block;
+        }
+
+        /* Custom image presentation for coming soon/unreleased elements inside media box */
+        .modal-placeholder-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
         }
 
         .modal-logo-overlay {
@@ -422,6 +468,13 @@
         .modal-info h2.blue-title {
             font-family: 'Orbitron', sans-serif;
             background: linear-gradient(180deg, #00ffff 0%, #0088ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Premium Gold style header for Michael Jackson movie view */
+        .modal-info h2.gold-title {
+            background: linear-gradient(180deg, #ffe066 0%, #f5af19 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -485,10 +538,7 @@
         <div class="billboard-content">
             <h1 id="hero-title">Loading...</h1>
             <p id="hero-desc"></p>
-            <button id="hero-play-btn" class="btn-play">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                Play Movie
-            </button>
+            <button id="hero-play-btn" class="btn-play"></button>
         </div>
     </section>
 
@@ -504,12 +554,14 @@
     <div id="detail-overlay" class="detail-overlay">
         <button class="btn-close" onclick="closeMovieTab()">✕</button>
         
-        <div class="detail-modal glass-panel">
+        <div id="detail-modal-box" class="detail-modal glass-panel">
             <div class="modal-player-box">
                 <!-- Inner Float Logo Layer -->
                 <img id="modal-logo" class="modal-logo-overlay" src="" alt="Overlay Logo">
                 
+                <!-- Display Video Stream vs Image Graphic Placeholders independently -->
                 <video id="tab-video-player" controls preload="metadata"></video>
+                <img id="tab-image-placeholder" class="modal-placeholder-image" src="" alt="Coming Soon Artwork">
             </div>
             <div class="modal-info">
                 <h2 id="modal-title">Movie Title</h2>
@@ -524,18 +576,30 @@
         let currentTabScope = 'movies';
 
         // ==========================================
-        // MOVIE ENGINE DATA INDEX (Database IDs)
+        // CONTENT ENGINE SEPARATED INDEXES 
         // ==========================================
-        const movieDatabase = {
+        const moviesDatabase = {
+            'michael': {
+                title: 'Michael',
+                videoUrl: '', // Kept empty -> triggers coming soon state automatically
+                billboardPosterUrl: 'https://4kwallpapers.com/images/walls/thumbs_2t/25965.jpg',
+                libraryPosterUrl: 'https://lionsgate.brightspotcdn.com/e7/e6/4ea9816e445e95f4ba96339a54e1/maven-27x40-1sht-ka-vrt-rgb-v16-online-crop.jpg',
+                logoUrl: '',
+                description: 'The definitive biographical motion picture chronicling the brilliant, complicated life of the King of Pop. Delivering his triumphs, struggles, unparalleled artistry, and the human being behind the global phenomenon.',
+                themeStyle: 'regal-gold',
+                hideTextOnBillboard: false,
+                isComingSoon: true
+            },
             'dm4': {
                 title: 'Despicable Me 4',
                 videoUrl: 'https://archive.org/download/mortal-kombat-bluray-1080p/Despicable%20Me%204.mp4',
                 billboardPosterUrl: 'https://4kwallpapers.com/images/wallpapers/despicable-me-4-2560x1440-15031.jpg',
                 libraryPosterUrl: 'https://m.media-amazon.com/images/M/MV5BODlhNjE1NjUtNjZiNi00MDBmLWJmYWEtNTEyZjEyYzg5MTcxXkEyXkFqcGc@._V1_.jpg',
                 logoUrl: '', 
-                description: 'Gru, Lucy, Margo, Edith, and Agnes welcome a new member to the family, Gru Jr., who is intent on tormenting his dad. Gru faces a new nemesis in Maxime Le Mal and his femme fatale girlfriend Valentina, and the family is forced to go on the run.',
+                description: 'Gru, Lucy, Margo, Edith, and Agnes welcome a new member to the family, Gru Jr., who is intent on tormenting his dad. Gru faces a new nemesis in Maxime Le Mal and his femme fatale girlfriend Valentina.',
                 themeStyle: 'clean-poster',
-                hideTextOnBillboard: true
+                hideTextOnBillboard: true,
+                isComingSoon: false
             },
             'mk1': {
                 title: 'Mortal Kombat 1',
@@ -545,7 +609,8 @@
                 logoUrl: 'https://logos-world.net/wp-content/uploads/2020/11/Mortal-Kombat-Logo.png',
                 description: 'MMA fighter Cole Young seeks out Earth\'s greatest champions in order to stand against the enemies of Outworld in a high stakes battle for the universe.',
                 themeStyle: 'fiery-orange',
-                hideTextOnBillboard: false
+                hideTextOnBillboard: false,
+                isComingSoon: false
             },
             'bfg': {
                 title: 'The BFG',
@@ -553,19 +618,35 @@
                 billboardPosterUrl: 'https://wallpapers.com/images/hd/the-bfg-movie-alo8v739htwfsxit.jpg',
                 libraryPosterUrl: 'https://m.media-amazon.com/images/I/71naZ-Kfl4L._AC_UF894,1000_QL80_.jpg',
                 logoUrl: '', 
-                description: 'An orphan girl named Sophie befriends a benevolent giant, dubbed the Big Friendly Giant, who delivers charming dreams to children. Together, they embark on a grand adventure to stop malicious, man-eating giants from invading the human world.',
+                description: 'An orphan girl named Sophie befriends a benevolent giant, dubbed the Big Friendly Giant, who delivers charming dreams to children.',
                 themeStyle: 'cold-steel',
-                hideTextOnBillboard: true
+                hideTextOnBillboard: true,
+                isComingSoon: false
             },
             'goat': {
                 title: 'GOAT',
-                videoUrl: 'PASTE_YOUR_GOAT_MOVIE_URL_HERE',
+                videoUrl: 'https://archive.org/download/mortal-kombat-bluray-1080p/Despicable%20Me%204.mp4',
                 billboardPosterUrl: 'https://4kwallpapers.com/images/wallpapers/goat-2026-8k-movie-7680x4320-23667.png',
                 libraryPosterUrl: 'https://image.tmdb.org/t/p/original/bkIVlnO1MnTS6jL6qP0Ki2H6O3.jpg',
                 logoUrl: '',
-                description: 'An original action-comedy animated adventure set in an all-animal world. Will, a small pygmy goat with big dreams, gets a once-in-a-lifetime shot to join the pros and play roarball—a high-intensity, co-ed, full-contact sport dominated by the fastest, fiercest predators in the world.',
+                description: 'An original action-comedy animated adventure set in an all-animal world. Will, a small pygmy goat with big dreams, gets a once-in-a-lifetime shot to join the pros and play roarball.',
                 themeStyle: 'electric-blue',
-                hideTextOnBillboard: false
+                hideTextOnBillboard: false,
+                isComingSoon: false
+            }
+        };
+
+        const seriesDatabase = {
+            'squidgame': {
+                title: 'Squid Game',
+                videoUrl: 'PASTE_YOUR_SQUID_GAME_SERIES_URL_HERE',
+                billboardPosterUrl: 'https://spaceandsorcery.wordpress.com/wp-content/uploads/2021/11/sg01.jpg',
+                libraryPosterUrl: 'https://wallpapercave.com/wp/wp15116736.webp',
+                logoUrl: '', // Handled via raw imagery assets inside your designated poster links per request
+                description: 'Hundreds of cash-strapped players accept a strange invitation to compete in children\'s games. Inside, a tempting prize awaits with deadly high stakes. A survival game where only one walks away.',
+                themeStyle: 'clean-poster',
+                hideTextOnBillboard: true,
+                isComingSoon: false
             }
         };
 
@@ -580,50 +661,94 @@
         
         // Pop-out Overlay Window System Selectors
         const detailOverlay = document.getElementById('detail-overlay');
+        const detailModalBox = document.getElementById('detail-modal-box');
         const tabPlayer = document.getElementById('tab-video-player');
+        const tabImagePlaceholder = document.getElementById('tab-image-placeholder');
         const modalLogo = document.getElementById('modal-logo');
         const modalTitle = document.getElementById('modal-title');
         const modalDesc = document.getElementById('modal-desc');
 
         // ==========================================
-        // DYNAMIC RANDOM ROTATOR ENGINE
+        // DYNAMIC BANNER SELECTION MECHANICS
         // ==========================================
-        const movieIds = Object.keys(movieDatabase);
-        const randomElementIndex = Math.floor(Math.random() * movieIds.length);
-        const MAIN_BILLBOARD_ID = movieIds[randomElementIndex]; 
-
-        // Setup the Landing Billboard Config Art
-        function setupBillboardBanner(id) {
-            const data = movieDatabase[id];
+        function setupBillboardBanner(id, scope) {
+            const db = (scope === 'movies') ? moviesDatabase : seriesDatabase;
+            const data = db[id];
             if (!data) return;
 
             billboard.style.backgroundImage = `url('${data.billboardPosterUrl}')`;
             
-            // Check if movie layout parameters require hiding descriptive text blocks
+            // Toggle core header visibility parameters
             if (data.hideTextOnBillboard) {
                 heroTitle.style.display = 'none';
                 heroDesc.style.display = 'none';
             } else {
                 heroTitle.style.display = 'block';
-                heroDesc.style.display = 'none'; // Keeps descriptions off the layout for clean alignment
+                heroDesc.style.display = 'none'; // Keeping descriptions clean off text layouts
                 heroTitle.innerText = data.title;
             }
 
-            // Reset custom theme classes from the interface buttons and text layers
+            // Reset action layouts
             heroTitle.className = '';
             heroPlayBtn.className = 'btn-play';
+            heroPlayBtn.removeAttribute('disabled');
 
-            // Handle theme styling configurations for the home banner layout
+            // Inject custom thematic features based on layout metadata parameters
+            if (data.isComingSoon) {
+                heroPlayBtn.className = 'btn-play coming-soon-btn';
+                heroPlayBtn.innerHTML = `Coming Soon`;
+            } else {
+                heroPlayBtn.innerHTML = `
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    Play Content
+                `;
+            }
+
             if (data.themeStyle === 'fiery-orange') {
                 heroTitle.className = 'fiery-orange-title';
                 heroPlayBtn.className = 'btn-play fiery-glow';
             } else if (data.themeStyle === 'electric-blue') {
                 heroTitle.className = 'blue-goat-title';
                 heroPlayBtn.className = 'btn-play neon-blue-glow';
+            } else if (data.themeStyle === 'regal-gold') {
+                heroTitle.className = 'regal-gold-title';
             }
             
-            // Wire the main homepage play button directly to open up its tab window
-            heroPlayBtn.setAttribute('onclick', `openMovieTab('${id}')`);
+            // Bind pop-out tab modal action launcher triggers
+            heroPlayBtn.setAttribute('onclick', `openContentTab('${id}', '${scope}')`);
+        }
+
+        // ==========================================
+        // DYNAMIC TRACK CARDS GRID RENDER ENGINE
+        // ==========================================
+        function buildGridUI(scope) {
+            libraryGrid.innerHTML = '';
+            const db = (scope === 'movies') ? moviesDatabase : seriesDatabase;
+            
+            Object.keys(db).forEach(id => {
+                const item = db[id];
+                const card = document.createElement('div');
+                card.className = 'movie-card glass-panel';
+                card.setAttribute('onclick', `openContentTab('${id}', '${scope}')`);
+
+                // Setup specific modifications for the Michael Jackson coming soon layout
+                if (item.themeStyle === 'regal-gold') {
+                    card.classList.add('gold-flare-hover');
+                }
+
+                let badgeHtml = item.isComingSoon ? `<div class="card-badge badge-gold">Soon</div>` : '';
+                let logoHtml = item.logoUrl ? `<img class="card-logo-overlay" src="${item.logoUrl}" alt="${item.title} Logo">` : '';
+
+                card.innerHTML = `
+                    <div class="poster-container">
+                        ${badgeHtml}
+                        <img class="poster-art" src="${item.libraryPosterUrl}" alt="${item.title} Poster Visual">
+                        ${logoHtml}
+                    </div>
+                    <div class="movie-card-title">${item.title}</div>
+                `;
+                libraryGrid.appendChild(card);
+            });
         }
 
         // ==========================================
@@ -633,7 +758,6 @@
             if (currentTabScope === targetTab) return;
             currentTabScope = targetTab;
 
-            // 1. Update Navigation Button Active States
             const btnMovies = document.getElementById('tab-movies');
             const btnSeries = document.getElementById('tab-series');
             const activePill = document.getElementById('active-pill');
@@ -641,35 +765,33 @@
             if (targetTab === 'movies') {
                 btnMovies.classList.add('active');
                 btnSeries.classList.remove('active');
-                // Slide the pill frame back to starting point
                 activePill.style.transform = 'translateX(0px)';
                 activePill.style.width = `${btnMovies.offsetWidth}px`;
                 shelfHeading.innerText = "Your Movies";
             } else {
                 btnSeries.classList.add('active');
                 btnMovies.classList.remove('active');
-                // Calculate movement offset based on button sizing blocks
-                const moveOffset = btnMovies.offsetWidth;
-                activePill.style.transform = `translateX(${moveOffset}px)`;
+                activePill.style.transform = `translateX(${btnMovies.offsetWidth}px)`;
                 activePill.style.width = `${btnSeries.offsetWidth}px`;
                 shelfHeading.innerText = "Your Series";
             }
 
-            // 2. Play Animated Grid Out / Crossfade Sequence
+            // Crossfade Sequence for grid view content swaps
             contentContainerView.classList.add('fade-out');
-
             setTimeout(() => {
-                if (targetTab === 'movies') {
-                    buildLibraryUI();
-                } else {
-                    buildSeriesUIPlaceholder();
-                }
-                // Fade view back in gracefully
+                buildGridUI(targetTab);
+                
+                // Set up the billboard header element to rotate using the selected tab context matching indices
+                const db = (targetTab === 'movies') ? moviesDatabase : seriesDatabase;
+                const keys = Object.keys(db);
+                const randomIdx = Math.floor(Math.random() * keys.length);
+                setupBillboardBanner(keys[randomIdx], targetTab);
+
                 contentContainerView.classList.remove('fade-out');
             }, 300);
         }
 
-        // Dynamic Sizing Initializer for Pill Capsule overlay placement
+        // Dynamic Sizing Initializer for Pill Capsule overlays
         function initTabPillPositions() {
             const activeBtn = document.querySelector('.tab-btn.active');
             const activePill = document.getElementById('active-pill');
@@ -678,74 +800,50 @@
             }
         }
 
-        // Build Shelf Grid Layout Loop using dedicated library portrait elements
-        function buildLibraryUI() {
-            libraryGrid.className = 'movie-grid';
-            libraryGrid.innerHTML = '';
-            Object.keys(movieDatabase).forEach(id => {
-                const item = movieDatabase[id];
-                
-                const card = document.createElement('div');
-                card.className = 'movie-card glass-panel';
-                card.setAttribute('onclick', `openMovieTab('${id}')`);
-
-                let logoHtml = item.logoUrl ? `<img class="card-logo-overlay" src="${item.logoUrl}" alt="${item.title} Logo">` : '';
-
-                card.innerHTML = `
-                    <div class="poster-container">
-                        <img class="poster-art" src="${item.libraryPosterUrl}" alt="${item.title} Portrait Poster">
-                        ${logoHtml}
-                    </div>
-                    <div class="movie-card-title">${item.title}</div>
-                `;
-                libraryGrid.appendChild(card);
-            });
-        }
-
-        // Build a elegant empty state placeholder for the Series scope block
-        function buildSeriesUIPlaceholder() {
-            libraryGrid.className = ''; // Remove grid styling constraints for full block presentation
-            libraryGrid.innerHTML = `
-                <div class="empty-placeholder glass-panel">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
-                        <line x="7" y="2" x1="7" y2="22"></line>
-                        <line x="17" y="2" x1="17" y2="22"></line>
-                        <line x="2" y="12" x1="22" y2="12"></line>
-                        <line x="2" y="7" x1="7" y2="7"></line>
-                        <line x="2" y="17" x1="7" y2="17"></line>
-                        <line x="17" y="17" x1="22" y2="17"></line>
-                        <line x="17" y="7" x1="22" y2="7"></line>
-                    </svg>
-                    <p>No TV Shows or Series added yet.</p>
-                </div>
-            `;
-        }
-
-        // Open custom sub-tab frame window to display data + play media stream
-        function openMovieTab(id) {
-            const data = movieDatabase[id];
+        // ==========================================
+        // OVERLAY TAB PLAYER FRAME MECHANICS
+        // ==========================================
+        function openContentTab(id, scope) {
+            const db = (scope === 'movies') ? moviesDatabase : seriesDatabase;
+            const data = db[id];
             if (!data) return;
 
-            // Load track data inside the container window mechanics
-            tabPlayer.src = data.videoUrl;
-            tabPlayer.poster = data.billboardPosterUrl;
-            modalTitle.style.display = 'block'; // Ensure title is visible in the pop-out window
+            // Reset player and placeholder visual frame displays completely
+            tabPlayer.style.display = 'none';
+            tabPlayer.src = '';
+            tabImagePlaceholder.style.display = 'none';
+            tabImagePlaceholder.src = '';
+            detailModalBox.className = 'detail-modal glass-panel';
+
+            modalTitle.style.display = 'block';
             modalTitle.innerText = data.title;
             modalDesc.innerText = data.description;
 
-            // Handle interior overlay pop-out menu styling configurations
+            // Handle coming soon asset block exceptions (e.g., Michael Jackson)
+            if (data.isComingSoon) {
+                tabImagePlaceholder.src = data.billboardPosterUrl;
+                tabImagePlaceholder.style.display = 'block';
+                detailModalBox.classList.add('gold-modal-glow');
+            } else {
+                tabPlayer.src = data.videoUrl;
+                tabPlayer.poster = data.billboardPosterUrl;
+                tabPlayer.style.display = 'block';
+            }
+
+            // Apply targeted title font themes
             if (data.themeStyle === 'fiery-orange') {
                 modalTitle.className = 'fiery-title';
             } else if (data.themeStyle === 'cold-steel') {
                 modalTitle.className = 'cold-title';
             } else if (data.themeStyle === 'electric-blue') {
                 modalTitle.className = 'blue-title';
+            } else if (data.themeStyle === 'regal-gold') {
+                modalTitle.className = 'gold-title';
             } else {
                 modalTitle.className = '';
             }
 
-            // Handle independent alpha overlay logo asset parameters
+            // Handle standalone alpha overlay vector graphic brand emblems
             if (data.logoUrl && data.logoUrl !== '') {
                 modalLogo.src = data.logoUrl;
                 modalLogo.style.display = 'block';
@@ -756,21 +854,20 @@
                 modalLogo.style.opacity = '0';
             }
 
-            // Display overlay tab panel smoothly
+            // Display overlay panel window
             detailOverlay.style.display = 'block';
             setTimeout(() => { detailOverlay.style.opacity = '1'; }, 10);
-            document.body.style.overflow = 'hidden'; // Lock down main screen scrolling
+            document.body.style.overflow = 'hidden'; // Lock background scrolling
         }
 
-        // Close window frame and shut down running media tracks completely
         function closeMovieTab() {
             tabPlayer.pause();
             detailOverlay.style.opacity = '0';
             setTimeout(() => { detailOverlay.style.display = 'none'; }, 400);
-            document.body.style.overflow = 'auto'; // Re-enable screen scrolling
+            document.body.style.overflow = 'auto'; // Re-enable background scrolling
         }
 
-        // Video Player Status Event Handlers inside the overlay
+        // Hide overlay logo details dynamically when video plays natively
         tabPlayer.addEventListener('play', () => { modalLogo.style.opacity = '0'; });
         tabPlayer.addEventListener('ended', () => {
             if (modalLogo.src && modalLogo.src !== window.location.href) modalLogo.style.opacity = '1';
@@ -778,8 +875,8 @@
 
         // App Initialization
         window.addEventListener('DOMContentLoaded', () => {
-            buildLibraryUI();
-            setupBillboardBanner(MAIN_BILLBOARD_ID);
+            buildGridUI('movies');
+            setupBillboardBanner('michael', 'movies'); // Default home banner view highlights the brand new Michael Jackson project setup
             initTabPillPositions();
         });
     </script>
