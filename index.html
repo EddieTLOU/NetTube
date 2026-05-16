@@ -438,7 +438,7 @@
         }
 
         /* ==========================================
-           CUSTOM APPLE MORPHISM CINEMATIC PLAYER
+           BUG FIXED CINEMATIC VIDEO PLAYER CANVAS
            ========================================== */
         .modal-player-box {
             position: relative;
@@ -451,11 +451,29 @@
             overflow: hidden;
         }
 
+        /* CRITICAL HOVER FIX: Force the background poster context to lock its properties layout state permanently */
+        .modal-player-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: inherit;
+            background-size: inherit;
+            background-position: inherit;
+            background-repeat: inherit;
+            z-index: 1;
+            pointer-events: none; /* Prevents nested element interaction from wiping the container display source */
+        }
+
         .modal-player-box video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+            position: relative;
+            z-index: 2; /* Sits cleanly over static background layer code blocks */
         }
 
         .modal-placeholder-image {
@@ -465,22 +483,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 2;
-            display: none;
-        }
-
-        .modal-logo-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 42%;
-            max-height: 160px;
-            object-fit: contain;
-            z-index: 4;
-            pointer-events: none;
-            filter: drop-shadow(0px 10px 25px rgba(0, 0, 0, 0.95));
-            transition: opacity 0.4s ease;
+            z-index: 3;
             display: none;
         }
 
@@ -737,8 +740,6 @@
         
         <div id="detail-modal-box" class="detail-modal glass-panel">
             <div id="player-container-frame" class="modal-player-box">
-                <!-- Inner Float Floating Brand Layer -->
-                <img id="modal-logo" class="modal-logo-overlay" src="" alt="Branded overlay logo asset">
                 
                 <!-- Main HTML5 Video Asset Layer -->
                 <video id="tab-video-player" preload="metadata"></video>
@@ -878,7 +879,6 @@
         const playerFrameBox = document.getElementById('player-container-frame');
         const tabPlayer = document.getElementById('tab-video-player');
         const tabImagePlaceholder = document.getElementById('tab-image-placeholder');
-        const modalLogo = document.getElementById('modal-logo');
         const modalTitle = document.getElementById('modal-title');
         const modalSeasonTag = document.getElementById('modal-season-tag');
         const modalDesc = document.getElementById('modal-desc');
@@ -1013,7 +1013,7 @@
             const data = db[id];
             if (!data) return;
 
-            // CRITICAL RESET FIX: Erase sticky layout attributes and close old paths cleanly
+            // Clean reset state properties on window wake
             tabPlayer.pause();
             tabPlayer.src = '';
             ctrlPlayBtn.textContent = '▶';
@@ -1022,10 +1022,8 @@
             
             detailModalBox.className = 'detail-modal glass-panel';
             modalTitle.className = '';
-            modalLogo.src = '';
-            modalLogo.style.display = 'none';
 
-            // Establish landscape backdrop art on player box container instantly
+            // STICKY BUG FIX: The image layout property binds perfectly without inner canvas cluttering
             playerFrameBox.style.backgroundImage = `url('${data.billboardPosterUrl}')`;
 
             if (data.themeStyle === 'regal-gold') {
@@ -1045,18 +1043,11 @@
             modalTitle.textContent = data.title;
             modalDesc.textContent = data.description;
 
-            // Render asset branding inside player frame safely
-            if (data.logoUrl) {
-                modalLogo.src = data.logoUrl;
-                modalLogo.style.display = 'block';
-            }
-
             if (data.isComingSoon) {
                 tabPlayer.style.display = 'none';
                 customControlsDeck.style.display = 'none';
                 tabImagePlaceholder.src = data.billboardPosterUrl;
                 tabImagePlaceholder.style.display = 'block';
-                modalLogo.style.display = 'none'; 
             } else {
                 tabImagePlaceholder.style.display = 'none';
                 tabPlayer.style.display = 'block';
@@ -1111,11 +1102,9 @@
             if (tabPlayer.paused || tabPlayer.ended) {
                 tabPlayer.play();
                 ctrlPlayBtn.textContent = '⏸';
-                modalLogo.style.opacity = '0'; // Smoothly hide display titles while projecting content
             } else {
                 tabPlayer.pause();
                 ctrlPlayBtn.textContent = '▶';
-                modalLogo.style.opacity = '1';
             }
         }
 
@@ -1164,10 +1153,8 @@
             currentActiveEpisodeIndex = targetIndex;
             tabPlayer.src = data.episodes[targetIndex].url;
             ctrlPlayBtn.textContent = '▶';
-            modalLogo.style.opacity = '1';
             tabPlayer.play().then(() => {
                 ctrlPlayBtn.textContent = '⏸';
-                modalLogo.style.opacity = '0';
             }).catch(() => {});
         }
 
