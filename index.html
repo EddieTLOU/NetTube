@@ -112,6 +112,18 @@
             filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
         }
 
+        /* Custom Class for GOAT Electric Ice Blue Title Header */
+        .billboard-content h1.blue-goat-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.2rem;
+            font-weight: 900;
+            background: linear-gradient(180deg, #00ffff 0%, #0088ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(0, 136, 255, 0.6)) drop-shadow(0 4px 10px rgba(0,0,0,0.8));
+            letter-spacing: 2px;
+        }
+
         /* Custom Class for Mortal Kombat Fiery Orange Title Header */
         .billboard-content h1.fiery-orange-title {
             background: linear-gradient(180deg, #ff9900 0%, #ff3300 100%);
@@ -155,6 +167,12 @@
         .btn-play.fiery-glow:hover {
             box-shadow: 0 0 20px rgba(255, 67, 0, 0.7);
             background-color: #fff3e0;
+        }
+
+        /* Dynamic neon blue glow hover for GOAT's play button */
+        .btn-play.neon-blue-glow:hover {
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.8);
+            background-color: #e0f7fa;
         }
 
         /* Movie Selection Shelf */
@@ -318,6 +336,14 @@
             -webkit-text-fill-color: transparent;
         }
 
+        /* Electric Blue style header for GOAT inside tab view */
+        .modal-info h2.blue-title {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(180deg, #00ffff 0%, #0088ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .modal-info p {
             color: rgba(215, 230, 250, 0.75);
             font-size: 1.2rem;
@@ -441,8 +467,8 @@
                 libraryPosterUrl: 'https://image.tmdb.org/t/p/original/bkIVlnO1MnTS6jL6qP0Ki2H6O3.jpg',
                 logoUrl: '',
                 description: 'An original action-comedy animated adventure set in an all-animal world. Will, a small pygmy goat with big dreams, gets a once-in-a-lifetime shot to join the pros and play roarball—a high-intensity, co-ed, full-contact sport dominated by the fastest, fiercest predators in the world.',
-                themeStyle: 'clean-poster',
-                hideTextOnBillboard: true
+                themeStyle: 'electric-blue',
+                hideTextOnBillboard: false // Changed to false so your title text logo shows up on the home menu!
             }
         };
 
@@ -480,19 +506,21 @@
                 heroDesc.style.display = 'none';
             } else {
                 heroTitle.style.display = 'block';
-                heroDesc.style.display = 'block';
+                heroDesc.style.display = 'none'; // Keeps descriptions off the layout for clean alignment
                 heroTitle.innerText = data.title;
-                heroDesc.innerText = data.description;
             }
 
             // Reset custom theme classes from the interface buttons and text layers
             heroTitle.className = '';
             heroPlayBtn.className = 'btn-play';
 
-            // Apply targeted fiery features strictly if Mortal Kombat is chosen
+            // Handle theme styling configurations for the home banner layout
             if (data.themeStyle === 'fiery-orange') {
                 heroTitle.className = 'fiery-orange-title';
                 heroPlayBtn.className = 'btn-play fiery-glow';
+            } else if (data.themeStyle === 'electric-blue') {
+                heroTitle.className = 'blue-goat-title';
+                heroPlayBtn.className = 'btn-play neon-blue-glow';
             }
             
             // Wire the main homepage play button directly to open up its tab window
@@ -530,6 +558,7 @@
             // Load track data inside the container window mechanics
             tabPlayer.src = data.videoUrl;
             tabPlayer.poster = data.billboardPosterUrl;
+            modalTitle.style.display = 'block'; // Ensure title is visible in the pop-out window
             modalTitle.innerText = data.title;
             modalDesc.innerText = data.description;
 
@@ -538,6 +567,8 @@
                 modalTitle.className = 'fiery-title';
             } else if (data.themeStyle === 'cold-steel') {
                 modalTitle.className = 'cold-title';
+            } else if (data.themeStyle === 'electric-blue') {
+                modalTitle.className = 'blue-title';
             } else {
                 modalTitle.className = '';
             }
