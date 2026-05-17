@@ -864,6 +864,17 @@
                 hideTextOnBillboard: false,
                 isComingSoon: false
             },
+            'theg1': {
+                title: 'The Godfather I',
+                videoUrl: 'YOUR_VIDEO_URL_HERE', 
+                billboardPosterUrl: 'https://wallpapercave.com/wp/wp12906934.jpg',
+                libraryPosterUrl: 'https://cdn.europosters.eu/image/750webp/106943.webp',
+                logoUrl: '',
+                description: '',
+                themeStyle: 'fiery-orange',
+                hideTextOnBillboard: true,
+                isComingSoon: false
+            },
         };
         const seriesDatabase = {
             'squidgame': {
@@ -1014,7 +1025,7 @@
             
             setTimeout(() => {
                 shelfHeading.textContent = (scope === 'movies') ? 'Your Movies' : 'Your Series';
-                const defaultId = (scope === 'movies') ? 'fnaf1' : 'squidgame';
+                const defaultId = (scope === 'movies') ? 'theg1' : 'squidgame';
                 
                 setupBillboardBanner(defaultId, scope);
                 buildMediaLibraryGrid(scope);
