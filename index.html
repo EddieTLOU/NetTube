@@ -1168,7 +1168,56 @@
             const defaultBtn = document.getElementById('tab-movies');
             const activePill = document.getElementById('active-pill');
             activePill.style.width = `${defaultBtn.offsetWidth}px`;
-        });
+        });// ==========================================
+// SAFE AUTO-HIDE CONTROLS ENGINE (NO BREAK FIX)
+// ==========================================
+(function() {
+    let controlsTimer;
+    
+    // Safety check: wait until the page fully loads so elements exist
+    window.addEventListener('DOMContentLoaded', () => {
+        const playerFrame = document.getElementById('player-container-frame');
+        const controlDeck = document.getElementById('custom-controls');
+        const videoElement = document.getElementById('tab-video-player');
+
+        // If your HTML elements aren't matching up perfectly, stop immediately so nothing breaks
+        if (!playerFrame || !controlDeck) return;
+
+        // Force a smooth fade transition into the CSS dynamically (keeps your style sheet safe)
+        controlDeck.style.transition = "opacity 0.4s ease-in-out";
+
+        function resetControlsTimeout() {
+            // Instantly bring the play bar back to view
+            controlDeck.style.opacity = '1';
+            controlDeck.style.pointerEvents = 'auto';
+
+            // Cancel any previous countdowns currently ticking down
+            clearTimeout(controlsTimer);
+
+            // Start a fresh 2-second countdown
+            controlsTimer = setTimeout(() => {
+                // Only hide the bar if a movie is actively playing!
+                if (videoElement && !videoElement.paused) {
+                    controlDeck.style.opacity = '0';
+                    controlDeck.style.pointerEvents = 'none';
+                }
+            }, 2000); // 2000ms = 2 seconds
+        }
+
+        // Listen for mouse movement or screen taps anywhere inside the video box area
+        playerFrame.addEventListener('mousemove', resetControlsTimeout);
+        playerFrame.addEventListener('touchstart', resetControlsTimeout);
+        
+        // Also show controls if the movie gets paused manually
+        if (videoElement) {
+            videoElement.addEventListener('pause', () => {
+                controlDeck.style.opacity = '1';
+                controlDeck.style.pointerEvents = 'auto';
+                clearTimeout(controlsTimer);
+            });
+        }
+    });
+})();
     </script>
 </body>
 </html>
