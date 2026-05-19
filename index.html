@@ -731,40 +731,7 @@
         // CONTENT ENGINE SEPARATED INDEXES 
         // ==========================================
         const moviesDatabase = {
-            'michael': {
-                title: 'Michael',
-                videoUrl: '', 
-                billboardPosterUrl: 'https://4kwallpapers.com/images/walls/thumbs_2t/25965.jpg',
-                libraryPosterUrl: 'https://lionsgate.brightspotcdn.com/e7/e6/4ea9816e445e95f4ba96339a54e1/maven-27x40-1sht-ka-vrt-rgb-v16-online-crop.jpg',
-                logoUrl: '',
-                description: 'The definitive biographical motion picture chronicling the brilliant, complicated life of the King of Pop. Delivering his triumphs, struggles, unparalleled artistry, and the human being behind the global phenomenon.',
-                themeStyle: 'regal-gold',
-                hideTextOnBillboard: false,
-                isComingSoon: true
-            },
-            'goat': {
-                title: 'GOAT',
-                videoUrl: 'https://archive.org/download/goat-2026_202605/GOAT%20%282026%29.mp4',
-                billboardPosterUrl: 'https://4kwallpapers.com/images/wallpapers/goat-2026-8k-movie-7680x4320-23667.png',
-                libraryPosterUrl: 'https://image.tmdb.org/t/p/original/bkIVlnO1MnTS6jL6qP0Ki2H6O3.jpg',
-                logoUrl: '',
-                description: 'An original action-comedy animated adventure set in an all-animal world. Will, a small pygmy goat with big dreams, gets a once-in-a-lifetime shot to join the pros and play roarball.',
-                themeStyle: 'electric-blue',
-                hideTextOnBillboard: false,
-                isComingSoon: false
-            },
-            'dm4': {
-                title: 'Despicable Me 4',
-                videoUrl: 'https://archive.org/download/mortal-kombat-bluray-1080p/Despicable%20Me%204.mp4',
-                billboardPosterUrl: 'https://4kwallpapers.com/images/wallpapers/despicable-me-4-2560x1440-15031.jpg',
-                libraryPosterUrl: 'https://m.media-amazon.com/images/M/MV5BODlhNjE1NjUtNjZiNi00MDBmLWJmYWEtNTEyZjEyYzg5MTcxXkEyXkFqcGc@._V1_.jpg',
-                logoUrl: '', 
-                description: 'Gru, Lucy, Margo, Edith, and Agnes welcome a new member to the family, Gru Jr., who is intent on tormenting his dad. Gru faces a new nemesis in Maxime Le Mal and his femme fatale girlfriend Valentina.',
-                themeStyle: 'clean-poster',
-                hideTextOnBillboard: true,
-                isComingSoon: false
-            },
-               },
+              },
             'mk1': {
                 title: 'Mortal Kombat I',
                 videoUrl: 'https://archive.org/download/mortal-kombat-bluray-1080p/Mortal%20Kombat%20%282021%29.mp4',
@@ -898,7 +865,6 @@
                 isComingSoon: false
             },
         };
-        };
 
         const seriesDatabase = {
             'squidgame': {
@@ -914,14 +880,14 @@
                 isComingSoon: false,
                 episodes: [
                     { name: 'Red Light, Green Light', url: 'https://archive.org/download/squid.-game.-s-01-e-01.-dubbed.-webrip.x-264-ion-10eztv.re/Squid.Game.S01E01.DUBBED.WEBRip.x264-ION10%5Beztv.re%5D.mp4' },
-                    { name: 'Hell', url: 'PASTE_EPISODE_2_URL_HERE' },
-                    { name: 'The Man with the Umbrella', url: 'PASTE_EPISODE_3_URL_HERE' },
-                    { name: 'Stick to the Team', url: 'PASTE_EPISODE_4_URL_HERE' },
-                    { name: 'A Fair World', url: 'PASTE_EPISODE_5_URL_HERE' },
-                    { name: 'Gganbu', url: 'PASTE_EPISODE_6_URL_HERE' },
-                    { name: 'VIPs', url: 'PASTE_EPISODE_7_URL_HERE' },
-                    { name: 'Front Man', url: 'PASTE_EPISODE_8_URL_HERE' },
-                    { name: 'One Lucky Day', url: 'PASTE_EPISODE_9_URL_HERE' }
+                    { name: 'Hell', url: '#' },
+                    { name: 'The Man with the Umbrella', url: '#' },
+                    { name: 'Stick to the Team', url: '#' },
+                    { name: 'A Fair World', url: '#' },
+                    { name: 'Gganbu', url: '#' },
+                    { name: 'VIPs', url: '#' },
+                    { name: 'Front Man', url: '#' },
+                    { name: 'One Lucky Day', url: '#' }
                 ]
             }
         };
@@ -961,7 +927,247 @@
             // Clean styles reset
             heroTitle.className = '';
             heroPlayBtn.className = 'apple-glass-btn btn-play';
+            
+            // Layout typography context toggles
+            if (data.themeStyle === 'fiery-orange') {
+                heroTitle.classList.add('fiery-orange-title');
+                heroPlayBtn.classList.add('fiery-glow');
+            } else if (data.themeStyle === 'electric-blue') {
+                heroTitle.classList.add('blue-goat-title');
+                heroPlayBtn.classList.add('neon-blue-glow');
+            } else if (data.themeStyle === 'regal-gold') {
+                heroTitle.classList.add('regal-gold-title');
+            } else if (data.themeStyle === 'squid-magenta') {
+                heroPlayBtn.classList.add('squid-magenta-glow');
+            }
+
+            // Hidden Title logic for asset designs
+            if (data.hideTextOnBillboard && data.logoUrl) {
+                heroTitle.style.display = 'none';
+                heroLogoImg.src = data.logoUrl;
+                heroLogoImg.style.display = 'block';
+            } else {
+                heroTitle.textContent = data.title;
+                heroTitle.style.display = 'block';
+                heroLogoImg.style.display = 'none';
+            }
+
+            heroDesc.textContent = data.description;
+
+            // Handle unreleased state buttons
+            if (data.isComingSoon) {
+                heroPlayBtn.innerHTML = '<span>⏳ Coming Soon</span>';
+                heroPlayBtn.classList.add('coming-soon-btn');
+                heroPlayBtn.onclick = null;
+            } else {
+                heroPlayBtn.innerHTML = '<span style="font-size:1.2rem;">►</span> Watch Now';
+                heroPlayBtn.onclick = () => launchMovieTab(id, scope);
+            }
         }
+
+        // ==========================================
+        // GRID DATA POPULATION RENDERER
+        // ==========================================
+        function buildMediaLibraryGrid(scope) {
+            libraryGrid.innerHTML = '';
+            const db = (scope === 'movies') ? moviesDatabase : seriesDatabase;
+
+            Object.keys(db).forEach(key => {
+                const item = db[key];
+                
+                const card = document.createElement('div');
+                card.className = 'movie-card';
+                if (item.themeStyle === 'squid-magenta') card.classList.add('squid-hover');
+                if (item.themeStyle === 'regal-gold') card.classList.add('gold-flare-hover');
+
+                let badgeHtml = '';
+                if (item.isComingSoon) {
+                    badgeHtml = `<div class="card-badge badge-gold">May 2026</div>`;
+                } else if (item.isSeries) {
+                    badgeHtml = `<div class="card-badge badge-magenta">Full Season</div>`;
+                }
+
+                let overlayLogoHtml = '';
+                if (item.hideTextOnBillboard && item.logoUrl) {
+                    overlayLogoHtml = `<img class="card-logo-overlay" src="${item.logoUrl}" alt="logo">`;
+                }
+
+                card.innerHTML = `
+                    <div class="poster-container">
+                        ${badgeHtml}
+                        <img class="poster-art" src="${item.libraryPosterUrl}" alt="${item.title}">
+                        ${overlayLogoHtml}
+                    </div>
+                    <div class="movie-card-title">${item.hideTextOnBillboard && item.logoUrl ? '' : item.title}</div>
+                `;
+
+                card.onclick = () => launchMovieTab(key, scope);
+                libraryGrid.appendChild(card);
+            });
+        }
+
+        // ==========================================
+        // TAB SWITCH CONTROLLER ENGINE
+        // ==========================================
+        function switchLibraryTab(scope) {
+            if (currentTabScope === scope) return;
+            currentTabScope = scope;
+
+            // Handle tab selector visuals
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            const clickedBtn = document.getElementById(`tab-${scope}`);
+            clickedBtn.classList.add('active');
+
+            // Slide capsule pill animation
+            const activePill = document.getElementById('active-pill');
+            activePill.style.transform = `translateX(${clickedBtn.offsetLeft - 4}px)`;
+            activePill.style.width = `${clickedBtn.offsetWidth}px`;
+
+            // Crossfade content views smoothly
+            contentContainerView.classList.add('fade-out');
+            
+            setTimeout(() => {
+                shelfHeading.textContent = (scope === 'movies') ? 'Your Movies' : 'Your Series';
+                const defaultId = (scope === 'movies') ? 'goat' : 'squidgame';
+                
+                setupBillboardBanner(defaultId, scope);
+                buildMediaLibraryGrid(scope);
+                
+                contentContainerView.classList.remove('fade-out');
+            }, 300);
+        }
+
+        // ==========================================
+        // IMMERSIVE DETAILED OVERLAY PLAYBACK CORE
+        // ==========================================
+        function launchMovieTab(id, scope) {
+            const db = (scope === 'movies') ? moviesDatabase : seriesDatabase;
+            const data = db[id];
+            if (!data) return;
+
+            // Reset custom overlay shapes
+            detailModalBox.className = 'detail-modal glass-panel';
+            modalTitle.className = '';
+
+            // Assign unique design accent outlines
+            if (data.themeStyle === 'regal-gold') {
+                detailModalBox.classList.add('gold-modal-glow');
+                modalTitle.classList.add('gold-title');
+            } else if (data.themeStyle === 'squid-magenta') {
+                detailModalBox.classList.add('squid-modal-glow');
+                modalTitle.classList.add('squid-title');
+            } else if (data.themeStyle === 'electric-blue') {
+                modalTitle.classList.add('blue-title');
+            } else if (data.themeStyle === 'fiery-orange') {
+                modalTitle.classList.add('fiery-title');
+            } else if (data.themeStyle === 'cold-steel') {
+                modalTitle.classList.add('cold-title');
+            }
+
+            modalTitle.textContent = data.title;
+            modalDesc.textContent = data.description;
+
+            // Setup display assets (Logo vs standard headers)
+            if (data.logoUrl) {
+                modalLogo.src = data.logoUrl;
+                modalLogo.style.display = 'block';
+            } else {
+                modalLogo.style.display = 'none';
+            }
+
+            // Handle coming soon image state vs interactive player streams
+            if (data.isComingSoon) {
+                tabPlayer.style.display = 'none';
+                tabPlayer.pause();
+                tabImagePlaceholder.src = data.billboardPosterUrl;
+                tabImagePlaceholder.style.display = 'block';
+                modalLogo.style.display = 'none';
+            } else {
+                tabImagePlaceholder.style.display = 'none';
+                tabPlayer.style.display = 'block';
+            }
+
+            // Setup standard Movie track vs Serialized structural breakdowns
+            if (data.isSeries) {
+                modalSeasonTag.textContent = data.seasonLabel || 'Season 1';
+                modalSeasonTag.style.display = 'block';
+                modalEpisodesSection.style.display = 'block';
+                
+                // Build dynamic episode selector element nodes
+                episodesGrid.innerHTML = '';
+                data.episodes.forEach((ep, index) => {
+                    const epCard = document.createElement('div');
+                    epCard.className = `episode-card ${index === 0 ? 'active-episode' : ''}`;
+                    epCard.id = `ep-card-${index}`;
+                    
+                    epCard.innerHTML = `
+                        <div class="ep-header">
+                            <span class="ep-number">Episode ${index + 1}</span>
+                        </div>
+                        <div class="ep-title">${ep.name}</div>
+                        <button class="apple-glass-btn ep-btn-play" onclick="changeEpisodeTrack('${id}', ${index})">
+                            ▶ Play Episode
+                        </button>
+                    `;
+                    episodesGrid.appendChild(epCard);
+                });
+
+                // Instantly source video tag to initial stream context
+                currentActiveEpisodeIndex = 0;
+                if (!data.isComingSoon) {
+                    tabPlayer.src = data.episodes[0].url;
+                }
+            } else {
+                modalSeasonTag.style.display = 'none';
+                modalEpisodesSection.style.display = 'none';
+                if (!data.isComingSoon) {
+                    tabPlayer.src = data.videoUrl;
+                }
+            }
+
+            // Animate overlay display
+            detailOverlay.style.display = 'block';
+            setTimeout(() => {
+                detailOverlay.style.opacity = '1';
+            }, 10);
+        }
+
+        function changeEpisodeTrack(seriesId, targetIndex) {
+            const data = seriesDatabase[seriesId];
+            if (!data || !data.episodes[targetIndex]) return;
+
+            document.querySelectorAll('.episode-card').forEach(c => c.classList.remove('active-episode'));
+            document.getElementById(`ep-card-${targetIndex}`).classList.add('active-episode');
+
+            currentActiveEpisodeIndex = targetIndex;
+            tabPlayer.src = data.episodes[targetIndex].url;
+            tabPlayer.play();
+        }
+
+        function closeMovieTab() {
+            detailOverlay.style.opacity = '0';
+            tabPlayer.pause();
+            setTimeout(() => {
+                detailOverlay.style.display = 'none';
+                tabPlayer.src = '';
+            }, 400);
+        }
+
+        // Escape Key Listener to exit overlay panel safely
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMovieTab();
+        });
+
+        // Initialize App Interface Engine Defaults on Boot
+        window.addEventListener('DOMContentLoaded', () => {
+            setupBillboardBanner('goat', 'movies');
+            buildMediaLibraryGrid('movies');
+            
+            // Match the capsule pill width to default active element natively
+            const defaultBtn = document.getElementById('tab-movies');
+            const activePill = document.getElementById('active-pill');
+            activePill.style.width = `${defaultBtn.offsetWidth}px`;
+        });
     </script>
 </body>
 </html>
