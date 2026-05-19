@@ -826,7 +826,8 @@
                 description: '',
                 themeStyle: 'fiery-orange',
                 hideTextOnBillboard: false,
-                isComingSoon: false
+                isComingSoon: false,
+                isGlitched: true
             },
             'goat': {
                 title: 'GOAT',
@@ -1123,17 +1124,15 @@
                 if (item.themeStyle === 'squid-magenta') card.classList.add('squid-hover');
                 if (item.themeStyle === 'regal-gold') card.classList.add('gold-flare-hover');
 
-                let badgeHtml = '';
-                if (item.isComingSoon) {
-                    badgeHtml = `<div class="card-badge badge-gold">Coming Soon</div>`;
-                } else if (item.isSeries) {
-                    badgeHtml = `<div class="card-badge badge-magenta">Full Season</div>`;
-                }
-
-                let overlayLogoHtml = '';
-                if (item.hideTextOnBillboard && item.logoUrl) {
-                    overlayLogoHtml = `<img class="card-logo-overlay" src="${item.logoUrl}" alt="logo">`;
-                }
+              let badgeHtml = '';
+if (item.isComingSoon) {
+    badgeHtml = `<div class="card-badge badge-gold">Coming Soon</div>`;
+} else if (item.isGlitched) {
+    // This tells JavaScript to actually write the HTML for your new badge!
+    badgeHtml = `<div class="card-badge badge-glitched">Glitched</div>`;
+} else if (item.isSeries) {
+    badgeHtml = `<div class="card-badge badge-magenta">Full Season</div>`;
+}
 
                 card.innerHTML = `
                     <div class="poster-container">
