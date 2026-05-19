@@ -396,14 +396,6 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
-        .badge-glitched {
-            background: linear-gradient(135deg, #00ffff 0%, #ff0055 100%);
-            color: #ffffff;
-            border: 1px solid rgba(255,255,255,0.3);
-            text-shadow: 1px 1px 2px #000;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-        }
-
         .movie-card-title {
             padding: 18px;
             font-size: 1.05rem;
@@ -790,12 +782,7 @@
                 billboardPosterUrl: 'https://4kwallpapers.com/images/walls/thumbs_2t/25965.jpg',
                 libraryPosterUrl: 'https://lionsgate.brightspotcdn.com/e7/e6/4ea9816e445e95f4ba96339a54e1/maven-27x40-1sht-ka-vrt-rgb-v16-online-crop.jpg',
                 logoUrl: '',
-                description: 'The definitive biographical motion picture chronicling the brilliant, complicated life of the King of Pop. Delivering his triumphs, struggles, unparalleled artistry, and the human being behind the global phenomenon.',
-                themeStyle: 'regal-gold',
-                hideTextOnBillboard: false,
-                isComingSoon: true
-            },
-            'mk2': {
+                descriptio            'mk2': {
                 title: 'Mortal Kombat II',
                 videoUrl: 'YOUR_VIDEO_URL_HERE', 
                 billboardPosterUrl: 'https://4kwallpapers.com/images/walls/thumbs_3t/25813.jpg',
@@ -826,8 +813,7 @@
                 description: '',
                 themeStyle: 'fiery-orange',
                 hideTextOnBillboard: false,
-                isComingSoon: false,
-                isGlitched: true
+                isComingSoon: false
             },
             'goat': {
                 title: 'GOAT',
@@ -1124,15 +1110,17 @@
                 if (item.themeStyle === 'squid-magenta') card.classList.add('squid-hover');
                 if (item.themeStyle === 'regal-gold') card.classList.add('gold-flare-hover');
 
-              let badgeHtml = '';
-if (item.isComingSoon) {
-    badgeHtml = `<div class="card-badge badge-gold">Coming Soon</div>`;
-} else if (item.isGlitched) {
-    // This tells JavaScript to actually write the HTML for your new badge!
-    badgeHtml = `<div class="card-badge badge-glitched">Glitched</div>`;
-} else if (item.isSeries) {
-    badgeHtml = `<div class="card-badge badge-magenta">Full Season</div>`;
-}
+                let badgeHtml = '';
+                if (item.isComingSoon) {
+                    badgeHtml = `<div class="card-badge badge-gold">Coming Soon</div>`;
+                } else if (item.isSeries) {
+                    badgeHtml = `<div class="card-badge badge-magenta">Full Season</div>`;
+                }
+
+                let overlayLogoHtml = '';
+                if (item.hideTextOnBillboard && item.logoUrl) {
+                    overlayLogoHtml = `<img class="card-logo-overlay" src="${item.logoUrl}" alt="logo">`;
+                }
 
                 card.innerHTML = `
                     <div class="poster-container">
@@ -1376,18 +1364,56 @@ if (item.isComingSoon) {
         }
 
         // Listen for mouse movement or screen taps anywhere inside the video box area
-        playerFrame.addEventListener('mousemove', resetControlsTimeout);
-        playerFrame.addEventListener('touchstart', resetControlsTimeout);
-        
-        // Also show controls if the movie gets paused manually
-        if (videoElement) {
-            videoElement.addEventListener('pause', () => {
-                controlDeck.style.opacity = '1';
-                controlDeck.style.pointerEvents = 'auto';
-                clearTimeout(controlsTimer);
-            });
+// Setup Control Auto-Hide Listeners using matching variable IDs
+        const playerFrame = document.getElementById('player-container-frame');
+        const controlDeck = document.getElementById('custom-controls');
+        let controlsTimer;
+
+        function resetControlsTimeout() {
+            controlDeck.style.opacity = '1';
+            controlDeck.style.pointerEvents = 'auto';
+            clearTimeout(controlsTimer);
+            if (!videoPlayer.paused) {
+                controlsTimer = setTimeout(() => {
+                    controlDeck.style.opacity = '0';
+                    controlDeck.style.pointerEvents = 'none';
+                }, 3000);
+            }
         }
+
+        if (playerFrame) {
+            playerFrame.addEventListener('mousemove', resetControlsTimeout);
+            playerFrame.addEventListener('touchstart', resetControlsTimeout);
+        }
+        
+        // Keep controls visible if the movie gets paused
+        videoPlayer.addEventListener('pause', () => {
+            controlDeck.style.opacity = '1';
+            controlDeck.style.pointerEvents = 'auto';
+            clearTimeout(controlsTimer);
+        });
+
+        // Track timeline progress bar updates
+        videoPlayer.addEventListener('timeupdate', () => {
+            if (!videoPlayer.duration) return;
+            const percentage = (videoPlayer.currentTime / videoPlayer.duration) * 100;
+            ctrlTimelineProgress.style.width = percentage + '%';
+            
+            // Format time text
+            const formatTime = (time) => {
+                const mins = Math.floor(time / 60).toString().padStart(2, '0');
+                const secs = Math.floor(time % 60).toString().padStart(2, '0');
+                return `${mins}:${secs}`;
+            };
+            ctrlTimeText.textContent = `${formatTime(videoPlayer.currentTime)} / ${formatTime(videoPlayer.duration)}`;
+        });
     });
-})();
-    </script>
+
+    // Initialize layout setup on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        buildMediaLibraryGrid('movies');
+        loadBillboardHero('michael', 'movies');
+    });
+</script>
 </body>
+</html>
