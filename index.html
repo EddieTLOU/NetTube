@@ -1312,6 +1312,35 @@
             const activePill = document.getElementById('active-pill');
             activePill.style.width = `${defaultBtn.offsetWidth}px`;
         });
+   // --- AUTO-HIDE CONTROLS ENGINE ---
+let controlsTimeout;
+const playerContainer = document.getElementById('player-container-frame');
+const customControls = document.getElementById('custom-controls');
+
+function showControls() {
+    // Show the controls container
+    customControls.style.opacity = '1';
+    customControls.style.pointerEvents = 'auto';
+    
+    // Clear any existing 2-second countdowns
+    clearTimeout(controlsTimeout);
+    
+    // Start a fresh 2-second countdown to hide them again
+    controlsTimeout = setTimeout(() => {
+        // Only hide if the video is actually playing
+        const videoPlayer = document.getElementById('tab-video-player');
+        if (videoPlayer && !videoPlayer.paused) {
+            customControls.style.opacity = '0';
+            customControls.style.pointerEvents = 'none';
+        }
+    }, 2000); // 2000 milliseconds = 2 seconds
+}
+
+// Trigger showControls whenever the mouse moves or screen is touched inside the player box
+if (playerContainer) {
+    playerContainer.addEventListener('mousemove', showControls);
+    playerContainer.addEventListener('touchstart', showControls);
+}
     </script>
 </body>
 </html>
